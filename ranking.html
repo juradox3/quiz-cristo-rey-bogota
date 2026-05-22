@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking - Hijas de Cristo Rey</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Ajustes ligeros para mejorar la visualización de los nuevos datos combinados */
+        .ranking-page {
+            background-color: #fafafa;
+        }
+        .meta-tag {
+            display: inline-block;
+            font-size: 11px;
+            color: #64748b;
+            background-color: #f1f5f9;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-top: 3px;
+            font-weight: 500;
+        }
+        .table-meta {
+            font-size: 11px;
+            color: #64748b;
+            background-color: #f1f5f9;
+            padding: 1px 6px;
+            border-radius: 3px;
+            margin-left: 8px;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body class="ranking-page">
+    <div class="ranking-container">
+        <div class="ranking-header" style="text-align: center;">
+            <img src="img/logo-colegio.png" alt="Colegio Cristo Rey" style="max-height: 70px; margin-bottom: 10px;" onerror="this.style.display='none'">
+            <h1>Ranking de Participantes</h1>
+            <p>150 años por Cristo y su Reino</p>
+        </div>
+
+        <div class="top-5-section">
+            <h2 class="top-5-title">🏆 Top 5 Mejores</h2>
+            <div class="ranking-list" id="top5List"></div>
+        </div>
+
+        <div class="all-participants">
+            <h2 class="participants-title">Todos los Participantes</h2>
+            <div class="participants-table">
+                <div class="table-header">
+                    <div>#</div>
+                    <div>Nombre / Información</div>
+                    <div>Porcentaje</div>
+                </div>
+                <div id="participantsList"></div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <button class="btn-back-home" onclick="window.location.href='index.html'">← Volver al Inicio</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { obtenerRanking } from "./js/firebase.js";
+
+        async function loadRanking() {
+            const top5List = document.getElementById('top5List');
+            const participantsList = document.getElementById('participantsList');
+
+            if(top5List) top5List.innerHTML = '<p style="text-align:center; color:#64748b;">Cargando posiciones desde Firebase...</p>';
+            if(participantsList) participantsList.innerHTML = '<div style="padding:15px; text-align:center; color:#64748b;">Cargando tabla...</div>';
+
+            const sortedResults = await obtenerRanking();
+            
+            if(top5List) top5List.innerHTML = '';
+            if(participantsList) participantsList.innerHTML = '';
+
+            // Renderizado del Top 5 mostrando Rol y Dependencia de manera elegante
+            sortedResults.slice(0, 5).forEach((result, index) => {
+                const infoRol = result.rol || 'Participante';
+                top5List.innerHTML += `
+                    <div class="ranking-item rank-${index + 1}">
+                        <div class="rank-badge">${index + 1}</div>
+                        <div class="ranking-info">
+                            <div class="ranking-name" style="font-weight: 700; color: #0f2c59;">
+                                ${result.nombre}
+                                <br><span class="meta-tag">${infoRol}</span>
+                            </div>
+                        </div>
+                        <div class="ranking-score"><div class="score-value">${result.puntaje}%</div></div>
+                    </div>
+                `;
+            });
+
+            // Renderizado de la tabla general de posiciones de forma limpia
+            sortedResults.forEach((result, index) => {
+                const infoRolGeneral = result.rol || 'N/A';
+                participantsList.innerHTML += `
+                    <div class="table-row">
+                        <div class="table-position">${index + 1}</div>
+                        <div class="table-name" style="color: #1e293b; font-weight: 500;">
+                            ${result.nombre} <span class="table-meta">${infoRolGeneral}</span>
+                        </div>
+                        <div class="table-percentage" style="font-weight: 700; color: #0f2c59;">${result.puntaje}%</div>
+                    </div>
+                `;
+            });
+        }
+
+        window.onload = loadRanking;
+    </script>
+</body>
+</html>

@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concurso Carismático - Colegio Cristo Rey Bogotá</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* === VARIABLES DE DISEÑO INSTITUCIONAL === */
+        :root {
+            --primary-blue: #0f2c59;      /* Azul de la bandera de Cristo Rey */
+            --secondary-blue: #1d4480;    /* Azul secundario heráldico */
+            --accent-gold: #c5a85c;       /* Dorado de los 150 años */
+            --light-gold: #f4ebd0;        /* Dorado suave de contraste */
+            --pure-white: #ffffff;
+            --neutral-bg: #f8fafc;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border-radius: 12px;
+            --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.15), 0 8px 10px -6px rgb(0 0 0 / 0.15);
+        }
+
+        /* === CONFIGURACIÓN DE FONDOS (MURAL 150 AÑOS) === */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f1f5f9;
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px 10px;
+        }
+
+        /* Marca de agua del mural en toda la aplicación */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('img/mural-150.jpeg'); /* Tu primera imagen cargada */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.15; /* Sutil para que no interfiera con las lecturas */
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* Velo azul sutil para dar uniformidad institucional */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(15, 44, 89, 0.05) 0%, rgba(244, 235, 208, 0.05) 100%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* === CONTENEDOR DE LA APLICACIÓN === */
+        .app-container {
+            width: 100%;
+            max-width: 650px;
+            z-index: 10;
+        }
+
+        .view-card {
+            background: rgba(255, 255, 255, 0.96); /* Efecto cristal limpio */
+            backdrop-filter: blur(8px);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            padding: 35px 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Línea superior dorada y azul tradicional */
+        .view-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-gold), var(--primary-blue));
+        }
+
+        .hidden {
+            display: none !important;
+            opacity: 0;
+        }
+
+        /* === COMPONENTES DE CABECERA === */
+        .header-logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header-school-logo {
+            max-height: 95px;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+        }
+
+        .app-title {
+            font-size: 22px;
+            color: var(--primary-blue);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .app-motto {
+            font-family: 'Playfair Display', serif;
+            font-size: 15px;
+            color: var(--accent-gold);
+            font-style: italic;
+            font-weight: 600;
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+
+        /* === PANTALLA DE ACCESO (REGISTRO) === */
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            border-radius: 8px;
+            padding: 18px;
+            color: var(--pure-white);
+            text-align: center;
+            margin-bottom: 25px;
+            border: 1px solid rgba(197, 168, 92, 0.3);
+        }
+
+        .welcome-banner h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .welcome-banner p {
+            font-size: 12.5px;
+            opacity: 0.95;
+            line-height: 1.4;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 14px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            color: var(--text-dark);
+            background-color: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            background-color: var(--pure-white);
+            box-shadow: 0 0 0 4px rgba(15, 44, 89, 0.1);
+        }
+
+        select.form-control {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%230f2c59'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 16px;
+        }
+
+        /* Botones Especiales */
+        .btn {
+            width: 100%;
+            padding: 14px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: var(--pure-white);
+            box-shadow: 0 4px 12px rgba(15, 44, 89, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(15, 44, 89, 0.3);
+            filter: brightness(1.1);
+        }
+
+        .btn-secondary {
+            background-color: var(--pure-white);
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+            margin-top: 12px;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(15, 44, 89, 0.04);
+            transform: translateY(-2px);
+        }
+
+        /* === PANTALLA DE PREGUNTAS (LIMPIO, SIN BANDERAS) === */
+        .quiz-meta-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f8fafc;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 20px;
+        }
+
+        .meta-user-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .meta-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        .meta-job {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .timer-badge {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--primary-blue);
+            font-family: monospace;
+            background: var(--pure-white);
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background-color: #e2e8f0;
+            border-radius: 3px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-gold), var(--primary-blue));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .question-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            background: rgba(197, 168, 92, 0.12);
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            line-height: 1.45;
+            margin-bottom: 22px;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-item {
+            background-color: var(--pure-white);
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option-item:hover {
+            border-color: var(--secondary-blue);
+            background-color: #f8fafc;
+            transform: translateX(3px);
+        }
+
+        .option-box-letter {
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            background-color: #f1f5f9;
+            color: var(--primary-blue);
+            font-weight: 800;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #cbd5e1;
+            flex-shrink: 0;
+        }
+
+        .option-box-text {
+            font-size: 13.5px;
+            font-weight: 500;
+            color: var(--text-dark);
+            line-height: 1.3;
+        }
+
+        /* Selección neutra para evitar pistas de acierto/error */
+        .option-item.selected {
+            background-color: #f1f5f9 !important;
+            border-color: #475569 !important;
+        }
+
+        .option-item.selected .option-box-letter {
+            background-color: #475569 !important;
+            color: var(--pure-white) !important;
+            border-color: #475569 !important;
+        }
+
+        .quiz-nav-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 18px;
+        }
+
+        .btn-nav {
+            flex: 1;
+            padding: 12px;
+            font-size: 12.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 6px;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-nav-prev {
+            background-color: #f1f5f9;
+            color: var(--text-muted);
+            border: 1px solid #cbd5e1;
+        }
+
+        .btn-nav-prev:hover:not(:disabled) {
+            background-color: #e2e8f0;
+            color: var(--text-dark);
+        }
+
+        .btn-nav-prev:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-nav-next {
+            background-color: var(--primary-blue);
+            color: var(--pure-white);
+        }
+
+        .btn-nav-finish {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: var(--pure-white);
+            display: none;
+        }
+
+        /* === DIPLOMA DE RECONOCIMIENTO PREMIUM === */
+        .diploma-wrapper {
+            background-color: #ffffff;
+            border: 6px double var(--accent-gold);
+            border-radius: 4px;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            font-family: 'Playfair Display', serif;
+            box-shadow: inset 0 0 40px rgba(197, 168, 92, 0.08);
+        }
+
+        /* Recuadro decorativo interno fino */
+        .diploma-wrapper::after {
+            content: "";
+            position: absolute;
+            top: 8px;
+            bottom: 8px;
+            left: 8px;
+            right: 8px;
+            border: 1px solid rgba(197, 168, 92, 0.25);
+            pointer-events: none;
+        }
+
+        .diploma-cross-icon {
+            font-size: 26px;
+            color: var(--accent-gold);
+            margin-bottom: 12px;
+        }
+
+        .diploma-title-school {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 18px;
+            color: var(--primary-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        .diploma-subtitle {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-style: italic;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.5px;
+            margin-bottom: 25px;
+        }
+
+        .diploma-award-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12.5px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .diploma-user-name {
+            font-size: 26px;
+            color: var(--accent-gold);
+            font-weight: 700;
+            display: inline-block;
+            border-bottom: 2px dashed var(--light-gold);
+            padding-bottom: 3px;
+            margin-bottom: 4px;
+        }
+
+        .diploma-user-meta {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 22px;
+        }
+
+        .diploma-core-motto {
+            font-size: 14.5px;
+            font-weight: 700;
+            font-style: italic;
+            color: var(--primary-blue);
+            line-height: 1.5;
+            max-width: 85%;
+            margin: 15px auto;
+        }
+
+        .diploma-body-p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            color: var(--text-dark);
+            line-height: 1.6;
+            max-width: 90%;
+            margin: 0 auto 25px auto;
+        }
+
+        .diploma-score-container {
+            background-color: var(--neutral-bg);
+            border: 1px solid #e2e8f0;
+            padding: 12px 20px;
+            border-radius: 6px;
+            display: inline-block;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 25px;
+        }
+
+        .diploma-score-container span {
+            font-size: 12px;
+            color: var(--text-muted);
+            display: block;
+        }
+
+        .diploma-score-container strong {
+            font-size: 20px;
+            color: var(--primary-blue);
+            font-weight: 800;
+        }
+
+        /* === RANKING GLOBAL CON PODIO === */
+        .ranking-title-box {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .ranking-title-box h2 {
+            font-size: 20px;
+            color: var(--primary-blue);
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .podium-row {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 12px;
+            margin-bottom: 30px;
+            padding-top: 10px;
+        }
+
+        .podium-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            text-align: center;
+        }
+
+        .podium-circle-wrapper {
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .podium-circle {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background-color: #f1f5f9;
+            border: 3px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: var(--text-muted);
+        }
+
+        .podium-num-tag {
+            position: absolute;
+            bottom: -4px;
+            right: -4px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        /* Diferenciación del Podio */
+        .p-1 .podium-circle { border-color: #ffd700; background-color: #fffbeb; width: 62px; height: 62px; font-size: 22px; }
+        .p-1 .podium-num-tag { background-color: #ffd700; color: #78350f; }
+
+        .p-2 .podium-circle { border-color: #c0c0c0; background-color: #f8fafc; }
+        .p-2 .podium-num-tag { background-color: #c0c0c0; color: #1e293b; }
+
+        .p-3 .podium-circle { border-color: #cd7f32; background-color: #fff7ed; }
+        .p-3 .podium-num-tag { background-color: #cd7f32; color: #fff; }
+
+        .podium-player-name {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            max-width: 95px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .podium-player-score {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--accent-gold);
+        }
+
+        .podium-player-sub {
+            font-size: 9px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* Tabla de posiciones */
+        .ranking-list-table {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+
+        .r-row {
+            display: grid;
+            grid-template-columns: 45px 1fr 75px;
+            align-items: center;
+            padding: 10px 14px;
+            background-color: var(--pure-white);
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .r-row:last-child { border-bottom: none; }
+        .r-row:nth-child(even) { background-color: #f8fafc; }
+
+        .r-header {
+            background-color: var(--primary-blue) !important;
+            color: var(--pure-white);
+            font-weight: 700;
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        .r-cell-pos { font-weight: 800; color: var(--text-muted); text-align: center; font-size: 12px; }
+        .r-cell-info { display: flex; flex-direction: column; }
+        .r-cell-title { font-size: 12.5px; font-weight: 700; color: var(--text-dark); }
+        .r-cell-subtitle { font-size: 10px; color: var(--text-muted); }
+        .r-cell-score { font-size: 13.5px; font-weight: 800; color: var(--primary-blue); text-align: right; }
+
+        /* === FOOTER GLOBAL === */
+        .app-footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .app-footer p {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .app-footer .footer-motto {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent-gold);
+            font-style: italic;
+            font-weight: 600;
+            margin-top: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+
+        <div id="viewAccess" class="view-card">
+            <div class="header-logo-container">
+                <img src="img/logo-colegio.png" alt="Escudo Colegio Cristo Rey Bogotá" class="header-school-logo" onerror="this.style.display='none'">
+                <h1 class="app-title">Concurso Carismático</h1>
+                <p class="app-motto">"Por Cristo soñamos, sumamos, servimos y su Reino construimos"</p>
+            </div>
+
+            <div class="welcome-banner">
+                <h3>Certamen de Conocimiento</h3>
+                <p>Bienvenido. Evaluemos juntos nuestro saber en la conmemoración de los 150 años de historia y misión de las Hijas de Cristo Rey.</p>
+            </div>
+
+            <label for="userType" style="font-weight: 600; color: #0f2c59; display: block; margin-bottom: 8px;">Tu Rol:</label>
+<select id="userType" onchange="toggleJobField()" required style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; margin-bottom: 20px; font-size: 14px; background-color: #fff;">
+    <option value="" disabled selected>-- Selecciona tu Rol --</option>
+    <option value="Directivos">Directivos</option>
+    <option value="Directivos Docentes">Directivos Docentes</option>
+    <option value="Docentes">Docentes</option>
+    <option value="Administrativos">Administrativos</option>
+    <option value="Mantenimiento">Mantenimiento</option>
+    <option value="Servicios Generales">Servicios Generales</option>
+</select>
+
+            <div class="form-group">
+                <label for="jobPosition">Cargo o Dependencia Específica:</label>
+                <input type="text" id="jobPosition" class="form-control" placeholder="Ej: Docente de Primaria, Coordinador, etc." required>
+            </div>
+
+            <div class="form-group">
+                <label for="fullName">Nombre Completo:</label>
+                <input type="text" id="fullName" class="form-control" placeholder="Escribe tus nombres y apellidos" required>
+            </div>
+
+            <button class="btn btn-primary" onclick="startQuizEngine()">
+                <i class="fa-solid fa-play"></i> Comenzar la Prueba
+            </button>
+
+            <button class="btn btn-secondary" onclick="navigateToView('viewRanking')">
+                <i class="fa-solid fa-trophy"></i> Ver Ranking Global
+            </button>
+        </div>
+
+        <div id="viewQuiz" class="view-card hidden">
+            <div class="header-logo-container" style="margin-bottom: 15px;">
+                <img src="img/logo-colegio.png" alt="Logo" style="max-height: 55px; margin-bottom: 5px;">
+                <p class="app-motto" style="font-size: 12px;">150 Años de Misión y Carisma</p>
+            </div>
+
+            <div class="quiz-meta-bar">
+                <div class="meta-user-info">
+                    <span id="playerDisplay" class="meta-name">Participante</span>
+                    <span id="jobDisplay" class="meta-job">Cargo</span>
+                </div>
+                <div id="timer" class="timer-badge">
+                    <i class="fa-regular fa-clock"></i> 00:00
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+
+            <div class="question-segment">
+                <span id="questionNumber" class="question-badge">Pregunta -- de --</span>
+                <h2 id="questionText" class="question-text">Cargando el enunciado...</h2>
+                <div id="optionsContainer" class="options-list"></div>
+            </div>
+
+            <div class="quiz-nav-row">
+                <button id="btnPrev" class="btn-nav btn-nav-prev" onclick="goToPreviousQuestion()">
+                    <i class="fa-solid fa-arrow-left"></i> Anterior
+                </button>
+                <button id="btnNext" class="btn-nav btn-nav-next" onclick="goToNextQuestion()">
+                    Siguiente <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <button id="btnFinish" class="btn-nav btn-nav-finish" onclick="processQuizCompletion()">
+                    <i class="fa-solid fa-check-double"></i> Finalizar Prueba
+                </button>
+            </div>
+        </div>
+
+        <div id="viewDiploma" class="view-card hidden" style="padding: 12px;">
+            <div class="diploma-wrapper">
+                <div class="diploma-header">
+                    <i class="fa-solid fa-cross diploma-cross-icon"></i>
+                    <img src="img/logo-colegio.png" alt="Logo" style="max-height: 65px; display: block; margin: 0 auto 5px auto;">
+                    <h3 class="diploma-title-school">Hijas de Cristo Rey</h3>
+                    <p class="diploma-subtitle">Colegio Cristo Rey Bogotá — 150 Años de Educación con Carisma</p>
+                </div>
+
+                <div>
+                    <p class="diploma-award-text">Diploma de Reconocimiento conferido a:</p>
+                    <h2 id="diplomaName" class="diploma-user-name">Nombre del Participante</h2>
+                    <p id="diplomaMeta" class="diploma-user-meta">Rol: -- | Cargo: --</p>
+                </div>
+
+                <div class="diploma-core-motto">
+                    "¡Al herido Corazón de Jesús, todo amor, honor y gloria por siempre!"
+                </div>
+
+                <p class="diploma-body-p">
+                    Por haber completado con éxito y dedicación el Certamen de Conocimiento Institucional, enalteciendo la memoria histórica del Venerable Padre José Gras y Granollers.
+                </p>
+
+                <div class="diploma-score-container">
+                    <span>Calificación Definitiva:</span>
+                    <strong id="diplomaScore">0%</strong>
+                    <span id="diplomaTime" style="font-size: 11px; margin-top: 2px;">Tiempo: 00:00</span>
+                </div>
+
+                <div style="display: flex; gap: 10px; justify-content: center; font-family: 'Montserrat', sans-serif;">
+                    <button class="btn btn-primary" onclick="navigateToView('viewRanking')" style="flex: 1; padding: 12px; font-size: 11px;">
+                        <i class="fa-solid fa-list-ol"></i> Ver Ranking
+                    </button>
+                    <button class="btn btn-secondary" onclick="fullApplicationReset()" style="flex: 1; padding: 12px; font-size: 11px; margin-top: 0;">
+                        <i class="fa-solid fa-power-off"></i> Iniciar de Nuevo
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="viewRanking" class="view-card hidden">
+            <div class="header-logo-container" style="margin-bottom: 15px;">
+                <img src="img/logo-colegio.png" alt="Logo" style="max-height: 60px;">
+            </div>
+            
+            <div class="ranking-title-box">
+                <h2>Cuadro de Honor</h2>
+                <p class="app-motto" style="font-size: 12px;">Los mejores puntajes del certamen</p>
+            </div>
+
+            <div class="podium-row">
+                <div class="podium-item p-2">
+                    <div class="podium-circle-wrapper">
+                        <div class="podium-circle"><i class="fa-solid fa-user"></i></div>
+                        <div class="podium-num-tag">2</div>
+                    </div>
+                    <div class="podium-player-name" id="pod2Name">Esperando...</div>
+                    <div class="podium-player-score" id="pod2Score">--</div>
+                    <div class="podium-player-sub" id="pod2Role">Participante</div>
+                </div>
+
+                <div class="podium-item p-1">
+                    <div class="podium-circle-wrapper">
+                        <div class="podium-circle"><i class="fa-solid fa-crown"></i></div>
+                        <div class="podium-num-tag">1</div>
+                    </div>
+                    <div class="podium-player-name" id="pod1Name">Esperando...</div>
+                    <div class="podium-player-score" id="pod1Score">--</div>
+                    <div class="podium-player-sub" id="pod1Role">Excelencia</div>
+                </div>
+
+                <div class="podium-item p-3">
+                    <div class="podium-circle-wrapper">
+                        <div class="podium-circle"><i class="fa-solid fa-user"></i></div>
+                        <div class="podium-num-tag">3</div>
+                    </div>
+                    <div class="podium-player-name" id="pod3Name">Esperando...</div>
+                    <div class="podium-player-score" id="pod3Score">--</div>
+                    <div class="podium-player-sub" id="pod3Role">Participante</div>
+                </div>
+            </div>
+
+            <div class="ranking-list-table">
+                <div class="r-row r-header">
+                    <div style="text-align: center;">Pos</div>
+                    <div>Participante / Dependencia</div>
+                    <div style="text-align: right;">Nota</div>
+                </div>
+                <div id="tableRowsContainer">
+                    </div>
+            </div>
+
+            <button class="btn btn-secondary" onclick="navigateToView('viewAccess')">
+                <i class="fa-solid fa-arrow-left"></i> Volver al Menú Principal
+            </button>
+        </div>
+
+        <footer class="app-footer">
+            <p>© Colegio Cristo Rey Bogotá</p>
+            <p class="footer-motto">150 Años evangelizando a través de la educación, el amor y el servicio</p>
+        </footer>
+
+    </div>
+
+    <script type="module">
+        import { guardarResultado, obtenerRanking } from "./js/firebase.js";
+        window.guardarResultadoFirebase = guardarResultado;
+        window.obtenerRankingFirebase = obtenerRanking;
+    </script>
+
+    <script>
+        // BANCO DE 50 PREGUNTAS COMPLETO CON DISTRACTORES INTEGRADOS
+        const masterQuestionsBank = [
+            { id: 1, text: "¿Dónde nació José Gras?", options: ["En Agramunt (Lérida).", "En Granada (Andalucía).", "En Barcelona (Cataluña).", "En Madrid (Castilla)."], correct: 0 },
+            { id: 2, text: "¿Cuándo nació José Gras?", options: ["El 22 de enero de 1834.", "El 15 de marzo de 1835.", "El 3 de mayo de 1836.", "El 25 de diciembre de 1833."], correct: 0 },
+            { id: 3, text: "¿Qué profesión tenían sus padres?", options: ["Eran campesinos.", "Eran comerciantes de telas.", "Eran artesanos locales.", "Eran maestros de escuela."], correct: 0 },
+            { id: 4, text: "¿Cuándo fue ordenado sacerdote José Gras?", options: ["El 20 de marzo de 1858.", "El 15 de abril de 1860.", "El 5 de junio de 1856.", "El 12 de octubre de 1859."], correct: 0 },
+            { id: 5, text: "¿El P. Gras fue sacerdote diocesano o religioso?", options: ["Diocesano.", "Religioso Jesuita.", "Religioso Franciscano.", "Sacerdote Carmelita."], correct: 0 },
+            { id: 6, text: "¿Cómo se llamaba la congregación fundada por José Gras?", options: ["Hijas de Cristo Rey.", "Hijas del Sagrado Corazón.", "Hijas de María Inmaculada.", "Hijas de la Providencia."], correct: 0 },
+            { id: 7, text: "¿En qué fecha funda el Instituto de las Hijas de Cristo Rey?", options: ["El 26 de mayo de 1876.", "El 15 de marzo de 1875.", "El 1 de junio de 1878.", "El 24 de diciembre de 1874."], correct: 0 },
+            { id: 8, text: "¿Cuál es la misión de las Hijas de Cristo Rey?", options: ["“Hacer reinar a Cristo”.", "Formar líderes políticos.", "Custodiar los templos marianos.", "Atender enfermos en misiones."], correct: 0 },
+            { id: 9, text: "¿En qué año llegaron las Hijas de Cristo Rey a Colombia?", options: ["En 1960.", "En 1950.", "En 1972.", "En 1965."], correct: 0 },
+            { id: 10, text: "¿A qué edad murió José Gras?", options: ["A los 84 años.", "A los 78 años.", "A los 80 años.", "A los 75 años."], correct: 0 },
+            { id: 11, text: "¿Qué secreto le contó Jesús a José Gras?", options: ["“Muchos hombres no me quieren y no quieren que yo reine en su corazón”.", "“El Reino de Dios llegará por medio de la espada”.", "“Fundarás colegios en el nuevo continente antes de un siglo”.", "“El secreto de la salvación está únicamente en el silencio”."], correct: 0 },
+            { id: 12, text: "¿Qué idea perseguía José Gras con la publicación del Paladín de Cristo?", options: ["Encender en amor de Cristo los corazones para hacerle reinar en ellos.", "Recaudar capital para las familias campesinas.", "Denunciar los abusos políticos de las autoridades locales.", "Atraer vocaciones sacerdotales al seminario de Granada."], correct: 0 },
+            { id: 13, text: "¿Con qué objeto se inscribió José Gras en la Academia Bibliográfica Mariana?", options: ["Publicar y propagar libros y escritos referentes únicamente a la Madre de Dios.", "Aprender técnicas de encuadernación de textos antiguos.", "Obtener un título de Teología avalado por Roma.", "Catalogar las apariciones marianas de Europa."], correct: 0 },
+            { id: 14, text: "¿Qué hecho ocurrido en 1863 conmovió profundamente a José Gras?", options: ["La publicación de La vida de Jesús de Ernesto Renán, donde se niega la divinidad de Cristo.", "El cierre definitivo de la Academia de la Virtud en Barcelona.", "Una epidemia que diezmó a la población de su pueblo natal.", "La pérdida de todos los manuscritos de su revista religiosa."], correct: 0 },
+            { id: 15, text: "¿A qué se dedicaba la Academia y Corte de Cristo?", options: ["Era una asociación religioso-literaria que defendía la divinidad de Cristo y le desagraviaba con la adoración eucarística.", "Era un colegio para capacitar a los hijos de obreros.", "Era un centro dedicado al estudio del canto litúrgico.", "Era una escuela clandestina de teología en Granada."], correct: 0 },
+            { id: 16, text: "¿Por qué el P. Gras tituló su revista “El Bien”?", options: ["Porque Cristo es el Bien individual, social, universal, inmenso, eterno e infinito.", "Porque buscaba contrarrestar la pobreza material del pueblo.", "Porque era una pauta de buenas costumbres urbanas.", "Porque el obispo de la diócesis sugirió ese nombre neutro."], correct: 0 },
+            { id: 17, text: "¿Qué decreto recibió el Instituto de la Santa Sede el 15 de febrero de 1898?", options: ["El Decretum Laudis.", "La Aprobación Papal Definitiva.", "La Bula de Canonización.", "El Breve Apostólico Inter Caetera."], correct: 0 },
+            { id: 18, text: "¿Para qué trabajó incansablemente José Gras según el decreto con el que fue declarado venerable?", options: ["Para que Cristo reinara en el corazón de todo hombre, en la familia y en la sociedad.", "Para expandir su obra educativa por toda América Latina.", "Para construir el Gran Templo Eucarístico del Sacro Monte.", "Para reformar los planes de estudio del gobierno español."], correct: 0 },
+            { id: 19, text: "¿Qué significa la educación como “segunda creación”?", options: ["Continuar la acción creadora de Dios y Cristo, moldeando las mentes y dando oportunidades.", "Volver a educar a los adultos que no terminaron la escuela.", "Implementar la creatividad y el arte como únicas materias.", "Sustituir el rol formador de los padres en el hogar."], correct: 0 },
+            { id: 20, text: "¿Qué significa “Cristo reina” según el pensamiento institucional?", options: ["Un llamado a transformar la vida y la sociedad; profesión de fe, amor y dogma de salvación; proclamación de la soberanía de Cristo.", "Un lema de uso exclusivo para las festividades de fin de año.", "Una frase bíblica aplicada a la liturgia dominical de la capilla.", "El encabezado obligatorio de los boletines de calificaciones."], correct: 0 },
+            { id: 21, text: "¿A qué edad recibió José Gras la confirmación?", options: ["A los 3 años.", "A los 7 años.", "A los 12 años.", "A los 15 años."], correct: 0 },
+            { id: 22, text: "¿Qué soñaba ser José Gras cuando era niño?", options: ["Sacerdote.", "Maestro de campo.", "Escritor literario.", "Misionero de ultramar."], correct: 0 },
+            { id: 23, text: "¿Qué estudiaba José además de asistir a la escuela?", options: ["Latín con el párroco del pueblo.", "Filosofía moderna en libros franceses.", "Contabilidad para ayudar a sus padres.", "Música y ejecución de órgano."], correct: 0 },
+            { id: 24, text: "¿A dónde viajó José Gras cuando tenía 12 años?", options: ["A Barcelona para ingresar al seminario.", "A Madrid a solicitar una beca real.", "A Granada a visitar la Abadía.", "A Lérida a trabajar como aprendiz."], correct: 0 },
+            { id: 25, text: "¿Cuándo celebra su primera misa cantada?", options: ["El 4 de abril de 1858.", "El 20 de mayo de 1860.", "El 1 de enero de 1859.", "El 15 de agosto de 1857."], correct: 0 },
+            { id: 26, text: "¿Por qué medios daba a conocer Cristo y su Evangelio?", options: ["Por medio de la enseñanza, sus escritos y la prédica.", "Por medio de misiones teatrales y cantos populares.", "Exclusivamente mediante la ayuda económica directa.", "A través de cartas enviadas a los reyes de Europa."], correct: 0 },
+            { id: 27, text: "¿Qué revista funda José Gras en enero de 1867?", options: ["“El Bien”.", "“El Paladín”.", "“La Corte de Cristo”.", "“Fe y Amor”."], correct: 0 },
+            { id: 28, text: "Inscripción en la Academia Bibliográfica Mariana para José Gras:", options: ["En Granada, España.", "En Lérida, España.", "En Roma, Italia.", "En Madrid, España."], correct: 0 },
+            { id: 29, text: "¿En qué medio de transporte bajaba el P. Gras de la Abadía al noviciado?", options: ["En burra.", "En carreta de caballos.", "A pie únicamente.", "En el tranvía de la época."], correct: 0 },
+            { id: 30, text: "¿En qué etapa del proceso de canonización se encuentra el P. Gras?", options: ["En la etapa de Venerable.", "En la etapa de Beato.", "Ya fue Canonizado.", "En la etapa inicial de Siervo de Dios."], correct: 0 },
+            { id: 31, text: "¿En qué año y en qué revista religiosa se publicó el primer artículo de José Gras?", options: ["En 1855, en la revista “La Cruz”.", "En 1858, en la revista “El Bien”.", "En 1860, en el diario general de Barcelona.", "En 1852, en los anales del seminario."], correct: 0 },
+            { id: 32, text: "¿Cómo se llamaba la obra en la que colaboró con el P. Francisco Palau?", options: ["La Escuela de Virtud.", "El Carmelo Misionero.", "La Corte de María.", "El Apostolado de la Oración."], correct: 0 },
+            { id: 33, text: "¿A qué edad dio su primera conferencia y dónde fue?", options: ["A los 20 años, en la Escuela de la Virtud.", "A los 24 años, en el seminario de Barcelona.", "A los 30 años, en la Universidad de Granada.", "A los 18 años, en la parroquia de Agramunt."], correct: 0 },
+            { id: 34, text: "Cuál fue el primer artículo escrito por José Gras como periodista:", options: ["“El progreso del bien y del mal”.", "“La soberanía social de Jesucristo”.", "“Defensa de la Eucaristía”.", "“El siglo de las luces y la fe”."], correct: 0 },
+            { id: 35, text: "¿Qué opúsculo escribió José Gras en 1885 para dar a conocer el Instituto?", options: ["Las Hijas de Cristo. Apostolado social de la mujer.", "Las Constituciones de las Hijas de Cristo Rey.", "El Manual del Educador Carismático.", "El reinado del Corazón de Jesús en la escuela."], correct: 0 },
+            { id: 36, text: "¿Qué otro opúsculo escribió en 1893?", options: ["Las Hijas de Cristo y sus centros de educación.", "La Segunda Creación del Alma.", "El Paladín del Siglo XIX.", "La Familia y el Reinado de Cristo."], correct: 0 },
+            { id: 37, text: "¿Cuáles son las dos expresiones sobre la educación según el pensamiento del P. Gras?", options: ["Segunda creación y apostolado.", "Instrucción técnica y piedad.", "Formación moral y disciplina.", "Ciencia humana y servicio social."], correct: 0 },
+            { id: 38, text: "¿Cuál es la finalidad de la misión compartida?", options: ["Dar continuidad al carisma de hacer reinar a Cristo por medio de la educación.", "Expandir las finanzas de la congregación a nivel mundial.", "Sustituir a las religiosas por personal puramente laico.", "Organizar únicamente eventos de carácter parroquial."], correct: 0 },
+            { id: 39, text: "Apartados del Pensamiento Educativo del P. José Gras:", options: ["Educación, educador, educandos y padres de familia.", "Filosofía, pedagogía, didáctica y evaluación.", "Colegio, iglesia, aula y comunidad urbana.", "Estado, iglesia, docentes y estudiantes."], correct: 0 },
+            { id: 40, text: "¿Cuáles son los cuatro gestos de la obra salvífica de Jesucristo?", options: ["Acoger, perdonar, liberar y curar.", "Predicar, bautizar, confesar y confirmar.", "Orar, ayunar, dar limosna y sacrificarse.", "Estudiar, enseñar, construir y servir."], correct: 0 },
+            { id: 41, text: "En qué fecha quedó aprobada la Academia y Corte de Cristo:", options: ["El 15 de diciembre de 1866.", "El 24 de mayo de 1870.", "El 1 de enero de 1865.", "El 12 de octubre de 1868."], correct: 0 },
+            { id: 42, text: "¿Qué libro escribió José Gras en 1864?", options: ["El Paladín de María.", "El Bien de las Almas.", "La Corte de Cristo Rey.", "El Sacerdote según el Evangelio."], correct: 0 },
+            { id: 43, text: "¿Qué libro publicó como respuesta al libro de Ernesto Renán?", options: ["Paladín de Cristo.", "El triunfo de la Divinidad.", "Contragolpe Teológico.", "Jesús, Dios Verdadero."], correct: 0 },
+            { id: 44, text: "¿En qué año se publica Paladín de Cristo?", options: ["A principios de 1865.", "A finales de 1863.", "En marzo de 1867.", "En julio de 1864."], correct: 0 },
+            { id: 45, text: "¿En qué año se inauguró la primera capilla en honor a Cristo Rey?", options: ["En abril de 1884.", "En mayo de 1876.", "En diciembre de 1890.", "En enero de 1880."], correct: 0 },
+            { id: 46, text: "¿Cuáles son los valores institucionales del Colegio Cristo Rey Bogotá?", options: ["Vida, amor, verdad, justicia y paz.", "Excelencia, disciplina, respeto y liderazgo.", "Fe, esperanza, caridad y templanza.", "Honestidad, solidaridad, puntualidad y pulcritud."], correct: 0 },
+            { id: 47, text: "¿Cuáles son los valores según el pensamiento educativo de José Gras?", options: ["Amor, verdad, bien, fe y vida; además libertad, justicia y paz.", "Ciencia, progreso, técnica, orden y disciplina rígida.", "Humildad, pobreza, castidad, silencio y obediencia.", "Trabajo, constancia, ahorro, éxito y fraternidad."], correct: 0 },
+            { id: 48, text: "¿Cuáles son las partes de la Eucaristía?", options: ["Ritos iniciales, Liturgia de la Palabra, Liturgia de la Eucaristía y Ritos de despedida.", "Canto de entrada, Lectura del Evangelio, Ofertorio y Comunión.", "Confesión, Comunión, Homilía y Bendición Papal.", "Ritos de Acogida, Consagración Eucarística y Envío Misionero."], correct: 0 },
+            { id: 49, text: "¿Qué ocurre en la consagración?", options: ["El pan y el vino se transforman en el Cuerpo y la Sangre de Jesús.", "Se bendicen simbólicamente las ofrendas traídas por los fieles.", "Se conmemora de forma literaria la última cena histórica.", "El sacerdote comparte la paz con la asamblea reunida."], correct: 0 },
+            { id: 50, text: "¿Cuáles son los pilares del orgullo Cristo Rey para vivir el sentido de pertenencia?", options: ["Identidad, participación, respeto y compromiso.", "Uniforme, escarapela, himno y bandera nacional.", "Asistencia, puntualidad, buenas notas y silencio.", "Deporte, lúdica, academia y oración matutina."] }
+        ];
+
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+        let timerInterval;
+        let timeElapsed = 0;
+        let shuffledQuestions = [];
+
+        // Conmutador de Vistas Seguro
+        function navigateToView(viewId) {
+            document.querySelectorAll('.view-card').forEach(card => card.classList.add('hidden'));
+            const targetView = document.getElementById(viewId);
+            if (targetView) {
+                targetView.classList.remove('hidden');
+                window.scrollTo(0, 0);
+            }
+            if (viewId === 'viewRanking') {
+                pullAndRenderRanking();
+            }
+        }
+
+        // Algoritmo Fisher-Yates para barajar las opciones internamente
+        function shuffleOptionsInternal(question) {
+            const questionCopy = JSON.parse(JSON.stringify(question));
+            const correctOptionText = questionCopy.options[questionCopy.correct];
+            
+            for (let i = questionCopy.options.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [questionCopy.options[i], questionCopy.options[j]] = [questionCopy.options[j], questionCopy.options[i]];
+            }
+            questionCopy.correct = questionCopy.options.indexOf(correctOptionText);
+            return questionCopy;
+        }
+
+        // --- ENMASCARAMIENTO Y ARRANQUE SEGURO DEL QUIZ ---
+        function startQuizEngine() {
+            const nameInput = document.getElementById('fullName');
+            const userTypeSelect = document.getElementById('userType');
+            const jobInput = document.getElementById('jobPosition');
+
+            const name = nameInput ? nameInput.value.trim() : "";
+            const userType = userTypeSelect ? userTypeSelect.options[userTypeSelect.selectedIndex].text : "No especificado";
+            const job = jobInput ? jobInput.value.trim() : "";
+
+            if (!name || !job) {
+                alert('Por favor, completa tu nombre y tu cargo antes de iniciar.');
+                return;
+            }
+
+            // Guardar datos en el localStorage
+            localStorage.setItem('currentUser', JSON.stringify({
+                name: name,
+                userType: userType,
+                job: job
+            }));
+
+            // Barajar las 50 preguntas y sus respectivas respuestas
+            shuffledQuestions = masterQuestionsBank
+                .sort(() => Math.random() - 0.5)
+                .map(q => shuffleOptionsInternal(q));
+
+            document.getElementById('playerDisplay').textContent = name;
+            document.getElementById('jobDisplay').textContent = `${userType} — ${job}`;
+
+            userAnswers = {};
+            currentQuestionIndex = 0;
+            timeElapsed = 0;
+
+            startClock();
+            loadActiveQuestion();
+            navigateToView('viewQuiz');
+        }
+
+        // --- MOTOR DE RENDERIZACIÓN DE ENUNCIADOS ---
+        function loadActiveQuestion() {
+            if(!shuffledQuestions.length) return;
+            const question = shuffledQuestions[currentQuestionIndex];
+            
+            const qNumElem = document.getElementById('questionNumber');
+            const qTextElem = document.getElementById('questionText');
+            const optionsContainer = document.getElementById('optionsContainer');
+            
+            if(qNumElem) qNumElem.textContent = `Pregunta ${currentQuestionIndex + 1} de ${shuffledQuestions.length}`;
+            if(qTextElem) qTextElem.textContent = question.text;
+            if(!optionsContainer) return;
+
+            optionsContainer.innerHTML = '';
+            const letters = ['A', 'B', 'C', 'D'];
+
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option-item';
+                if (userAnswers[currentQuestionIndex] === index) {
+                    optionElement.classList.add('selected');
+                }
+                
+                optionElement.innerHTML = `
+                    <div class="option-box-letter">${letters[index]}</div>
+                    <div class="option-box-text">${option}</div>
+                `;
+                
+                optionElement.onclick = () => selectOptionBadge(index);
+                optionsContainer.appendChild(optionElement);
+            });
+
+            // Barra de progreso interactiva
+            const progressFill = document.getElementById('progressFill');
+            if(progressFill) {
+                const progress = ((currentQuestionIndex + 1) / shuffledQuestions.length) * 100;
+                progressFill.style.width = progress + '%';
+            }
+
+            // Control de botones de navegación
+            const btnPrev = document.getElementById('btnPrev');
+            if(btnPrev) btnPrev.disabled = currentQuestionIndex === 0;
+            
+            const btnFinish = document.getElementById('btnFinish');
+            const btnNext = document.getElementById('btnNext');
+            
+            if(btnNext && btnFinish) {
+                if (currentQuestionIndex === shuffledQuestions.length - 1) {
+                    btnNext.style.display = 'none';
+                    btnFinish.style.display = 'flex';
+                } else {
+                    btnNext.style.display = 'flex';
+                    btnFinish.style.display = 'none';
+                }
+            }
+        }
+
+        function selectOptionBadge(index) {
+            userAnswers[currentQuestionIndex] = index;
+            document.querySelectorAll('.option-item').forEach((option, i) => {
+                option.classList.remove('selected');
+                if (i === index) {
+                    option.classList.add('selected');
+                }
+            });
+        }
+
+        function verifyCurrentSelection() {
+            if (typeof userAnswers[currentQuestionIndex] !== 'number') {
+                alert('Debes seleccionar una opción para poder continuar.');
+                return false;
+            }
+            return true;
+        }
+
+        function goToNextQuestion() {
+            if (!verifyCurrentSelection()) return;
+            if (currentQuestionIndex < shuffledQuestions.length - 1) {
+                currentQuestionIndex++;
+                loadActiveQuestion();
+            }
+        }
+
+        function goToPreviousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadActiveQuestion();
+            }
+        }
+
+        // --- CRONÓMETRO ---
+        function startClock() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeElapsed++;
+                const timerElem = document.getElementById('timer');
+                if(timerElem) {
+                    const m = Math.floor(timeElapsed / 60);
+                    const s = timeElapsed % 60;
+                    timerElem.innerHTML = `<i class="fa-regular fa-clock"></i> ${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+                }
+            }, 1000);
+        }
+
+        // --- EVALUACIÓN Y DESPLIEGUE DEL DIPLOMA ---
+        function calculateFinalScore() {
+            let hits = 0;
+            shuffledQuestions.forEach((q, idx) => {
+                if (userAnswers[idx] === q.correct) hits++;
+            });
+            return {
+                correct: hits,
+                total: shuffledQuestions.length,
+                percentage: Math.round((hits / shuffledQuestions.length) * 100)
+            };
+        }
+
+        async function processQuizCompletion() {
+            if (!verifyCurrentSelection()) return;
+            clearInterval(timerInterval);
+
+            const currentUser = JSON.parse(localStorage.getItem('currentUser')) || { name: "Anónimo", userType: "Docente", job: "Ninguno" };
+            const score = calculateFinalScore();
+
+            // Guardado seguro en tu Firebase vinculando el nuevo campo combinando rol/cargo
+            if (window.guardarResultadoFirebase) {
+                try {
+                    const rolCompuesto = `${currentUser.userType} (${currentUser.job})`;
+                    await window.guardarResultadoFirebase(currentUser.name, score.percentage, rolCompuesto);
+                } catch (e) {
+                    console.error("Fallo al sincronizar con Firestore:", e);
+                }
+            }
+
+            // Cargar datos en la plantilla elegante del Diploma
+            document.getElementById('diplomaName').textContent = currentUser.name;
+            document.getElementById('diplomaMeta').textContent = `Rol: ${currentUser.userType} | Cargo: ${currentUser.job}`;
+            document.getElementById('diplomaScore').textContent = `${score.percentage}%`;
+            
+            const minutes = Math.floor(timeElapsed / 60);
+            const seconds = timeElapsed % 60;
+            document.getElementById('diplomaTime').textContent = `Tiempo de Prueba: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')} min`;
+
+            // Muestra el diploma desplegado de forma directa e inmediata
+            navigateToView('viewDiploma');
+        }
+
+        // --- EXTRACCIÓN Y RENDERIZADO DEL RANKING REAL ---
+        async function pullAndRenderRanking() {
+            const tableBody = document.getElementById('tableRowsContainer');
+            if (!tableBody) return;
+            tableBody.innerHTML = '<div style="padding:15px;text-align:center;font-size:12px;color:var(--text-muted);">Cargando posiciones de Firebase...</div>';
+
+            let dataList = [];
+            if (window.obtenerRankingFirebase) {
+                dataList = await window.obtenerRankingFirebase();
+            }
+
+            // Si Firebase está vacío por ser un inicio limpio, mostramos datos de cortesía estructurados
+            if (!dataList || dataList.length === 0) {
+                dataList = [
+                    { nombre: "Sor María Inés", puntaje: 100, rol: "Directivos (Madre Superiora)" },
+                    { nombre: "Carlos Mendoza", puntaje: 96, rol: "Docentes (Matemáticas)" },
+                    { nombre: "Clara Inés Bogotá", puntaje: 92, rol: "Servicios Generales" }
+                ];
+            }
+
+            // Asignar los 3 primeros puestos al Podio de Honor
+            document.getElementById('pod1Name').textContent = dataList[0] ? dataList[0].nombre : "--";
+            document.getElementById('pod1Score').textContent = dataList[0] ? `${dataList[0].puntaje}%` : "--";
+            document.getElementById('pod1Role').textContent = dataList[0] ? dataList[0].rol.split(' ')[0] : "--";
+
+            document.getElementById('pod2Name').textContent = dataList[1] ? dataList[1].nombre : "--";
+            document.getElementById('pod2Score').textContent = dataList[1] ? `${dataList[1].puntaje}%` : "--";
+            document.getElementById('pod2Role').textContent = dataList[1] ? dataList[1].rol.split(' ')[0] : "--";
+
+            document.getElementById('pod3Name').textContent = dataList[2] ? dataList[2].nombre : "--";
+            document.getElementById('pod3Score').textContent = dataList[2] ? `${dataList[2].puntaje}%` : "--";
+            document.getElementById('pod3Role').textContent = dataList[2] ? dataList[2].rol.split(' ')[0] : "--";
+
+            // Listar la tabla de posiciones general completa
+            tableBody.innerHTML = '';
+            dataList.forEach((participant, index) => {
+                tableBody.innerHTML += `
+                    <div class="r-row">
+                        <div class="r-cell-pos">${index + 1}</div>
+                        <div class="r-cell-info">
+                            <span class="r-cell-title">${participant.nombre}</span>
+                            <span class="r-cell-subtitle">${participant.rol}</span>
+                        </div>
+                        <div class="r-cell-score">${participant.puntaje}%</div>
+                    </div>
+                `;
+            });
+        }
+
+        // Cierre de sesión total para dar paso a un nuevo usuario en la estación
+        function fullApplicationReset() {
+            localStorage.clear();
+            document.getElementById('fullName').value = '';
+            document.getElementById('jobPosition').value = '';
+            navigateToView('viewAccess');
+        }
+    </script>
+</body>
+</html>
