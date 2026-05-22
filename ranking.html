@@ -24,7 +24,7 @@
             font-size: 11px;
             color: #64748b;
             background-color: #f1f5f9;
-            padding: 1px 6px;
+            padding: 2px 6px;
             border-radius: 3px;
             margin-left: 8px;
             font-weight: normal;
@@ -46,18 +46,18 @@
 
         <div class="all-participants">
             <h2 class="participants-title">Todos los Participantes</h2>
-            <div class="participants-table">
+            <div class="participants-table" id="participantsTableContainer">
                 <div class="table-header">
-                    <div>#</div>
-                    <div>Nombre / Información</div>
-                    <div>Porcentaje</div>
+                    <div>POS</div>
+                    <div>PARTICIPANTE / DEPENDENCIA</div>
+                    <div>NOTA</div>
                 </div>
                 <div id="participantsList"></div>
             </div>
         </div>
 
         <div style="text-align: center; margin-top: 40px;">
-            <button class="btn-back-home" onclick="window.location.href='index.html'">← Volver al Inicio</button>
+            <button class="btn-back-home" onclick="window.location.href='index.html'">← VOLVER AL MENÚ PRINCIPAL</button>
         </div>
     </div>
 
@@ -68,44 +68,64 @@
             const top5List = document.getElementById('top5List');
             const participantsList = document.getElementById('participantsList');
 
-            if(top5List) top5List.innerHTML = '<p style="text-align:center; color:#64748b;">Cargando posiciones desde Firebase...</p>';
-            if(participantsList) participantsList.innerHTML = '<div style="padding:15px; text-align:center; color:#64748b;">Cargando tabla...</div>';
+            if(top5List) top5List.innerHTML = '<p style="text-align:center; color:#64748b; padding: 10px;">Cargando posiciones desde Firebase...</p>';
+            if(participantsList) participantsList.innerHTML = '<div style="padding:20px; text-align:center; color:#64748b;">Cargando posiciones de Firebase...</div>';
 
-            const sortedResults = await obtenerRanking();
-            
-            if(top5List) top5List.innerHTML = '';
-            if(participantsList) participantsList.innerHTML = '';
+            try {
+                const sortedResults = await obtenerRanking();
+                
+                if(top5List) top5List.innerHTML = '';
+                if(participantsList) participantsList.innerHTML = '';
 
-            // Renderizado del Top 5 mostrando Rol y Dependencia de manera elegante
-            sortedResults.slice(0, 5).forEach((result, index) => {
-                const infoRol = result.rol || 'Participante';
-                top5List.innerHTML += `
-                    <div class="ranking-item rank-${index + 1}">
-                        <div class="rank-badge">${index + 1}</div>
-                        <div class="ranking-info">
-                            <div class="ranking-name" style="font-weight: 700; color: #0f2c59;">
-                                ${result.nombre}
-                                <br><span class="meta-tag">${infoRol}</span>
+                // Si no hay resultados todavía
+                if (!sortedResults || sortedResults.length === 0) {
+                    if(top5List) top5List.innerHTML = '<p style="text-align:center; color:#64748b;">No hay registros aún.</p>';
+                    if(participantsList) participantsList.innerHTML = '<div style="padding:15px; text-align:center; color:#64748b;">No hay participantes registrados.</div>';
+                    return;
+                }
+
+                // 1. Renderizado del Top 5 (Para las medallas y podios superiores)
+                sortedResults.slice(0, 5).forEach((result, index) => {
+                    // Controlamos que lea los campos correctos (userType o rol) y el cargo opcional
+                    const infoRol = result.userType || result.rol || 'Participante';
+                    const infoCargo = result.jobPosition || result.cargo || '';
+                    const infoCompleta = infoCargo ? `${infoRol} (${infoCargo})` : infoRol;
+
+                    top5List.innerHTML += `
+                        <div class="ranking-item rank-${index + 1}">
+                            <div class="rank-badge">${index + 1}</div>
+                            <div class="ranking-info">
+                                <div class="ranking-name" style="font-weight: 700; color: #0f2c59;">
+                                    ${result.nombre || 'Anónimo'}
+                                    <br><span class="meta-tag">${infoCompleta}</span>
+                                </div>
                             </div>
+                            <div class="ranking-score"><div class="score-value">${result.puntaje}%</div></div>
                         </div>
-                        <div class="ranking-score"><div class="score-value">${result.puntaje}%</div></div>
-                    </div>
-                `;
-            });
+                    `;
+                });
 
-            // Renderizado de la tabla general de posiciones de forma limpia
-            sortedResults.forEach((result, index) => {
-                const infoRolGeneral = result.rol || 'N/A';
-                participantsList.innerHTML += `
-                    <div class="table-row">
-                        <div class="table-position">${index + 1}</div>
-                        <div class="table-name" style="color: #1e293b; font-weight: 500;">
-                            ${result.nombre} <span class="table-meta">${infoRolGeneral}</span>
+                // 2. Renderizado de la tabla general de posiciones de forma limpia e irrompible
+                sortedResults.forEach((result, index) => {
+                    const infoRolGeneral = result.userType || result.rol || 'Participante';
+                    const infoCargoGeneral = result.jobPosition || result.cargo || '';
+                    const infoMostrarTabla = infoCargoGeneral ? `${infoRolGeneral} - ${infoCargoGeneral}` : infoRolGeneral;
+
+                    participantsList.innerHTML += `
+                        <div class="table-row">
+                            <div class="table-position">${index + 1}</div>
+                            <div class="table-name" style="color: #1e293b; font-weight: 500;">
+                                ${result.nombre || 'Anónimo'} <span class="table-meta">${infoMostrarTabla}</span>
+                            </div>
+                            <div class="table-percentage" style="font-weight: 700; color: #0f2c59;">${result.puntaje}%</div>
                         </div>
-                        <div class="table-percentage" style="font-weight: 700; color: #0f2c59;">${result.puntaje}%</div>
-                    </div>
-                `;
-            });
+                    `;
+                });
+
+            } catch (error) {
+                console.error("Error al cargar el ranking: ", error);
+                if(participantsList) participantsList.innerHTML = '<div style="padding:15px; text-align:center; color:#ef4444;">Error al conectar con la base de datos.</div>';
+            }
         }
 
         window.onload = loadRanking;
