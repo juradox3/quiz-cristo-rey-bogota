@@ -77,18 +77,24 @@
                 if(top5List) top5List.innerHTML = '';
                 if(participantsList) participantsList.innerHTML = '';
 
-                // Si no hay resultados todavía
                 if (!sortedResults || sortedResults.length === 0) {
                     if(top5List) top5List.innerHTML = '<p style="text-align:center; color:#64748b;">No hay registros aún.</p>';
                     if(participantsList) participantsList.innerHTML = '<div style="padding:15px; text-align:center; color:#64748b;">No hay participantes registrados.</div>';
                     return;
                 }
 
-                // 1. Renderizado del Top 5 (Para las medallas y podios superiores)
+                // 1. Renderizado del Top 5 (Podio Superior)
                 sortedResults.slice(0, 5).forEach((result, index) => {
-                    // Controlamos que lea los campos correctos (userType o rol) y el cargo opcional
-                    const infoRol = result.userType || result.rol || 'Participante';
-                    const infoCargo = result.jobPosition || result.cargo || '';
+                    let infoRol = result.userType || result.rol || 'Participante';
+                    let infoCargo = result.jobPosition || result.cargo || '';
+                    
+                    // Salvavidas por si intentaba usar split en un campo vacío
+                    if (infoRol && infoRol.includes('-')) {
+                        const partes = infoRol.split('-');
+                        infoRol = partes[0].trim();
+                        if(!infoCargo) infoCargo = partes[1] ? partes[1].trim() : '';
+                    }
+
                     const infoCompleta = infoCargo ? `${infoRol} (${infoCargo})` : infoRol;
 
                     top5List.innerHTML += `
@@ -105,10 +111,18 @@
                     `;
                 });
 
-                // 2. Renderizado de la tabla general de posiciones de forma limpia e irrompible
+                // 2. Renderizado de la tabla completa de posiciones (Evita el cuelgue del split)
                 sortedResults.forEach((result, index) => {
-                    const infoRolGeneral = result.userType || result.rol || 'Participante';
-                    const infoCargoGeneral = result.jobPosition || result.cargo || '';
+                    let infoRolGeneral = result.userType || result.rol || 'Participante';
+                    let infoCargoGeneral = result.jobPosition || result.cargo || '';
+
+                    // Si el campo trae un guión, lo separamos de forma segura verificando que no sea nulo
+                    if (infoRolGeneral && typeof infoRolGeneral === 'string' && infoRolGeneral.includes('-')) {
+                        const partesGeneral = infoRolGeneral.split('-');
+                        infoRolGeneral = partesGeneral[0].trim();
+                        if(!infoCargoGeneral) infoCargoGeneral = partesGeneral[1] ? partesGeneral[1].trim() : '';
+                    }
+
                     const infoMostrarTabla = infoCargoGeneral ? `${infoRolGeneral} - ${infoCargoGeneral}` : infoRolGeneral;
 
                     participantsList.innerHTML += `
@@ -123,12 +137,10 @@
                 });
 
             } catch (error) {
-                console.error("Error al cargar el ranking: ", error);
-                if(participantsList) participantsList.innerHTML = '<div style="padding:15px; text-align:center; color:#ef4444;">Error al conectar con la base de datos.</div>';
+                console.error("Error crítico en ranking: ", error);
+                if(participantsList) participantsList.innerHTML = '<div style="padding:15px; text-align:center; color:#ef4444;">Error al procesar la lista.</div>';
             }
         }
 
         window.onload = loadRanking;
     </script>
-</body>
-</html>
