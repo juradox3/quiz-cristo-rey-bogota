@@ -725,15 +725,15 @@
             </div>
 
             <label for="userType" style="font-weight: 600; color: #0f2c59; display: block; margin-bottom: 8px;">Tu Rol:</label>
-<select id="userType" onchange="toggleJobField()" required style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; margin-bottom: 20px; font-size: 14px; background-color: #fff;">
-    <option value="" disabled selected>-- Selecciona tu Rol --</option>
-    <option value="Directivos">Directivos</option>
-    <option value="Directivos Docentes">Directivos Docentes</option>
-    <option value="Docentes">Docentes</option>
-    <option value="Administrativos">Administrativos</option>
-    <option value="Mantenimiento">Mantenimiento</option>
-    <option value="Servicios Generales">Servicios Generales</option>
-</select>
+            <select id="userType" onchange="toggleJobField()" required style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; margin-bottom: 20px; font-size: 14px; background-color: #fff;">
+                <option value="" disabled selected>-- Selecciona tu Rol --</option>
+                <option value="Directivos">Directivos</option>
+                <option value="Directivos Docentes">Directivos Docentes</option>
+                <option value="Docentes">Docentes</option>
+                <option value="Administrativos">Administrativos</option>
+                <option value="Mantenimiento">Mantenimiento</option>
+                <option value="Servicios Generales">Servicios Generales</option>
+            </select>
 
             <div class="form-group">
                 <label for="jobPosition">Cargo o Dependencia Específica:</label>
@@ -745,7 +745,7 @@
                 <input type="text" id="fullName" class="form-control" placeholder="Escribe tus nombres y apellidos" required>
             </div>
 
-            <button class="btn btn-primary" onclick="startQuizEngine()">
+            <button class="btn btn-primary" onclick="initializeQuiz()">
                 <i class="fa-solid fa-play"></i> Comenzar la Prueba
             </button>
 
@@ -881,8 +881,7 @@
                     <div>Participante / Dependencia</div>
                     <div style="text-align: right;">Nota</div>
                 </div>
-                <div id="tableRowsContainer">
-                    </div>
+                <div id="tableRowsContainer"></div>
             </div>
 
             <button class="btn btn-secondary" onclick="navigateToView('viewAccess')">
@@ -902,6 +901,6 @@
         window.guardarResultadoFirebase = guardarResultado;
         window.obtenerRankingFirebase = obtenerRanking;
     </script>
-<script type="module" src="js/quiz.js"></script>
+    <script type="module" src="js/quiz.js"></script>
 </body>
 </html>
