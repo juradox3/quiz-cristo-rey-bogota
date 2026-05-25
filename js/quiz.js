@@ -490,9 +490,6 @@ document.getElementById("viewQuiz")
     document.getElementById("playerDisplay").textContent =
         userData.name;
 
-   document.getElementById("userName").textContent =
-        userData.name;
-
     startTimer();
     loadQuestion();
     setupNavigationListeners();
