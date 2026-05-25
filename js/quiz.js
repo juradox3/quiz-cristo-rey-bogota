@@ -189,7 +189,7 @@ const questions = [
     },
     { 
         id: 23, 
-        text: "¿El P. Gras fue sacerdote, diocesano o religioso?", 
+        text: "¿El Padre Gras fue sacerdote, diocesano o religioso?", 
         options: ["Religioso.", "Jesuita.", "Diocesano.", "Franciscano.", "Monacal."], 
         correct: 2 
     },
