@@ -908,48 +908,14 @@
         // Función requerida para manejar visibilidad de campos de registro
         function toggleJobField() {
             const userType = document.getElementById("userType").value;
-            const jobPositionRow = document.getElementById("jobPosition").closest('.form-group');
+            const jobPosition = document.getElementById("jobPosition");
             
-            // Si el rol es mantenimiento o servicios generales opcionalmente puedes cambiar comportamiento. 
-            // Por defecto mantendremos el campo visible o puedes personalizarlo aquí:
             if(userType === "Mantenimiento" || userType === "Servicios Generales") {
-                // Ejemplo opcional: autocompletar si no quieren especificar más
-                document.getElementById("jobPosition").placeholder = "Ej: Operario, Servicios, etc.";
+                jobPosition.placeholder = "Ej: Operario, Servicios, etc.";
             } else {
-                document.getElementById("jobPosition").placeholder = "Ej: Docente de Primaria, Coordinador, etc.";
+                jobPosition.placeholder = "Ej: Docente de Primaria, Coordinador, etc.";
             }
         }
-        
-        // Exponer la función para que el selector 'onchange' no falle
-        window.toggleJobField = toggleJobField;
-
-        // Enrutadores de seguridad en caso de desfase de carga modular
-        window.initializeQuiz = function() { 
-            if(window.startQuizEngine) window.startQuizEngine(); 
-            else console.error("El motor del Quiz aún está cargando...");
-        };
-        window.goToPreviousQuestion = function() {
-            if(window.previousQuestion) window.previousQuestion();
-        };
-        window.goToNextQuestion = function() {
-            if(window.nextQuestion) window.nextQuestion();
-        };
-        window.processQuizCompletion = function() {
-            if(window.finishQuiz) window.finishQuiz();
-        };
-        window.navigateToView = function(viewId) {
-            if(window.changeView) {
-                window.changeView(viewId);
-            } else {
-                // Fallback clásico de navegación por si el módulo no ha cargado por completo
-                document.querySelectorAll('.view-card').forEach(el => el.classList.add('hidden'));
-                document.getElementById(viewId).classList.remove('hidden');
-            }
-        };
-        window.fullApplicationReset = function() {
-            if(window.resetQuizApp) window.resetQuizApp();
-            else location.reload();
-        };
     </script>
 </body>
 </html>
