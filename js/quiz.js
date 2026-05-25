@@ -778,5 +778,62 @@ function navigateToView(viewId) {
 function fullApplicationReset() {
 
     location.reload();
+    async function cargarRanking() {
+
+    const rankingContainer =
+        document.getElementById("rankingContainer");
+
+    if (!rankingContainer) return;
+
+    rankingContainer.innerHTML =
+        "<p>Cargando ranking...</p>";
+
+    try {
+
+        const ranking = await obtenerRanking();
+
+        rankingContainer.innerHTML = "";
+
+        ranking.forEach((jugador, index) => {
+
+            const item = document.createElement("div");
+
+            item.className = "ranking-item";
+
+            item.innerHTML = `
+                <div>
+                    <strong>#${index + 1}</strong>
+                    ${jugador.nombre}
+                </div>
+
+                <div>
+                    ${jugador.puntaje}%
+                </div>
+            `;
+
+            rankingContainer.appendChild(item);
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        rankingContainer.innerHTML =
+            "<p>Error cargando ranking</p>";
+    }
+}
+
+window.initializeQuiz = initializeQuiz;
+window.nextQuestion = nextQuestion;
+window.previousQuestion = previousQuestion;
+window.finishQuiz = finishQuiz;
+window.navigateToView = navigateToView;
+window.fullApplicationReset = fullApplicationReset;
+
+window.onload = () => {
+
+    cargarRanking();
+
+};
 
 }
