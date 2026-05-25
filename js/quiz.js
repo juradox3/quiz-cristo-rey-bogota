@@ -1,4 +1,16 @@
-import { guardarResultado, obtenerRanking } from "./firebase.js";
+// En tu js/quiz.js
+import { guardarResultado } from "./firebase.js";
+
+// En lugar de poner onclick en el HTML, haz esto:
+document.addEventListener("DOMContentLoaded", () => {
+    const boton = document.getElementById("tuBotonID"); // Cambia por el ID de tu botón
+    if (boton) {
+        boton.addEventListener("click", () => {
+            // Llama a tu función aquí
+            initializeQuiz(); 
+        });
+    }
+});
 
 const questions = [
     { 
