@@ -78,7 +78,7 @@ const questions = [
         id: 11, 
         text: "¿Por qué considera el P. Gras como importante la Adoración a Jesús en la Eucaristía?", 
         options: [
-            "Porque la Eucaristía “es la suprema y eterna demostración del amor que Dios manifiesta a las almas”",
+            "Ref. la Eucaristía “es la suprema y eterna demostración del amor que Dios manifiesta a las almas”",
             "Porque la Eucaristía “es la suprema e inefable prueba del amor que Dios tiene a la humanidad”",
             "Porque la Eucaristía “es la misteriosa e inefable muestra del amor que Cristo ofrece a la iglesia”",
             "Porque la Eucaristía “es la primera e inefable prueba de la entrega que Dios hace a la humanidad”",
@@ -244,7 +244,7 @@ const questions = [
     },
     { 
         id: 29, 
-        text: "¿Qué idea persigue José con la publicación del Paladín de Cristo?", 
+        text: "¿Qué idea persigue José con la publication del Paladín de Cristo?", 
         options: [
             "Encender en amor de María los corazones para hacerle reinar en ellos.",
             "Inculcar el amor de Cristo en los corazones para hacerle reinar en ellos.",
@@ -358,7 +358,7 @@ const questions = [
     },
     { 
         id: 43, 
-        text: "¿Cuál es la misión de las Hijas de Cristo Rey?", 
+        text: "Claramente cuál es la misión de las Hijas de Cristo Rey?", 
         options: ["“Evangelizar en las escuelas”.", "“Servir a los más necesitados”.", "“Hacer reinar a Cristo”.", "“Llevar a Cristo al mundo”.", "“Hacer reinar la paz”."], 
         correct: 2 
     },
@@ -436,7 +436,7 @@ const questions = [
     },
     { 
         id: 50, 
-        text: "¿Cuáles son los apartados que comprende el Pensamiento Educativo del Venerable Padre José Gras?", 
+        text: "Cuáles son los apartados que comprende el Pensamiento Educativo del Venerable Padre José Gras?", 
         options: [
             "Educación, educador, estudiantes y padres de familia.",
             "Educación, escuela, educandos y padres de familia.",
@@ -491,7 +491,6 @@ function initializeQuiz() {
     setupNavigationListeners();
 }
 
-// Vincula dinámicamente los escuchadores de eventos eliminando los atributos onclick antiguos
 function setupNavigationListeners() {
     const btnPrev = document.getElementById('btnPrev');
     const btnNext = document.getElementById('btnNext');
@@ -576,7 +575,6 @@ function selectOption(index) {
     });
 }
 
-// Permite avanzar libremente sin obligar a responder en cada paso intermediario
 function nextQuestion() {
     if (currentQuestionIndex < shuffledQuestions.length - 1) {
         currentQuestionIndex++;
@@ -621,7 +619,6 @@ function calculateScore() {
     };
 }
 
-// Al finalizar, se verifica únicamente si hay preguntas pendientes de responder en total
 async function finishQuiz() {
     const totalContestadas = Object.keys(userAnswers).length;
     if (totalContestadas < shuffledQuestions.length) {
@@ -634,9 +631,14 @@ async function finishQuiz() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser')) || { name: "Anónimo", userType: "Docente", job: "General" };
     const score = calculateScore();
 
+    // Calculamos la nota (escala 1.0 a 5.0) para guardarla en Firebase
+    const notaCalculada = 1.0 + ((score.correct / score.total) * 4.0);
+    const notaFinalFormateada = notaCalculada.toFixed(1);
+
     try {
         const compositeRole = `${currentUser.userType} — ${currentUser.job || 'General'}`;
-        await guardarResultado(currentUser.name, score.percentage, compositeRole);
+        // Se envía de forma correcta el cuarto parámetro 'notaFinalFormateada'
+        await guardarResultado(currentUser.name, score.percentage, compositeRole, notaFinalFormateada);
     } catch (error) {
         console.error("No se pudo guardar en Firebase:", error);
     }
