@@ -897,30 +897,24 @@
         </footer>
 
     </div>
-
-    <script type="module">
-        import { guardarResultado, obtenerRanking } from "./js/firebase.js";
-        window.guardarResultadoFirebase = guardarResultado;
-        window.obtenerRankingFirebase = obtenerRanking;
-    </script>
     
     <script type="module" src="js/quiz.js"></script>
 
     <script>
         // Función requerida para manejar visibilidad de campos de registro
-        function toggleJobField() {
-            const userType = document.getElementById("userType").value;
-            const jobPosition = document.getElementById("jobPosition");
-            
-            if(userType === "Mantenimiento" || userType === "Servicios Generales") {
-                jobPosition.placeholder = "Ej: Operario, Servicios, etc.";
-            } else {
-                jobPosition.placeholder = "Ej: Docente de Primaria, Coordinador, etc.";
-            }
+       <script>
+    function toggleJobField() {
+        const userType = document.getElementById("userType").value;
+        const jobPosition = document.getElementById("jobPosition");
+        
+        if(userType === "Mantenimiento" || userType === "Servicios Generales") {
+            jobPosition.placeholder = "Ej: Operario, Servicios, etc.";
+        } else {
+            jobPosition.placeholder = "Ej: Docente de Primaria, Coordinador, etc.";
         }
-    </script>
-    <script type="module" src="js/firebase.js"></script>
+    }
+</script>
+
+<script type="module" src="js/firebase.js"></script>
 <script type="module" src="js/ranking.js"></script>
 <script type="module" src="js/quiz.js"></script>
-</body>
-</html>
