@@ -13,7 +13,8 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
 
-    apiKey: "TU_API_KEY",
+apiKey: 
+    "AIzaSyDbHYxo5U1jxuI07N67ctDmpCCwMx8tEzQ",
 
     authDomain:
         "colegio-cristo-rey-bogota.firebaseapp.com",
