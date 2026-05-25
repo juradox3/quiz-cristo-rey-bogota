@@ -774,4 +774,22 @@ window.nextQuestion = nextQuestion;
 window.previousQuestion = previousQuestion;
 window.finishQuiz = finishQuiz;
 window.navigateToView = navigateToView;
+window.navigateToView = function(viewId) {
+
+    document.querySelectorAll(".view-card")
+        .forEach(view => {
+            view.classList.add("hidden");
+        });
+
+    document.getElementById(viewId)
+        .classList.remove("hidden");
+
+    // RECARGAR RANKING
+    if (viewId === "viewRanking") {
+
+        import("./ranking.js").then(module => {
+            location.reload();
+        });
+    }
+}
 window.fullApplicationReset = fullApplicationReset;
