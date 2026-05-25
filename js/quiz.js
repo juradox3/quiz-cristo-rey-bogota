@@ -472,13 +472,39 @@ function shuffleQuestionOptions(question) {
 
 function initializeQuiz() {
 
-    const userData = JSON.parse(localStorage.getItem("currentUser"));
-   document.getElementById("viewAccess")
-    .classList.add("hidden");
+    const fullName =
+        document.getElementById("fullName").value;
 
-document.getElementById("viewQuiz")
-    .classList.remove("hidden");
-    
+    const userType =
+        document.getElementById("userType").value;
+
+    const job =
+        document.getElementById("jobPosition").value;
+
+    // Validación básica
+    if (!fullName || !userType || !job) {
+        alert("Completa todos los campos");
+        return;
+    }
+
+    const currentUser = {
+        name: fullName,
+        userType: userType,
+        job: job
+    };
+
+    // Guardar usuario
+    localStorage.setItem(
+        "currentUser",
+        JSON.stringify(currentUser)
+    );
+
+    document.getElementById("viewAccess")
+        .classList.add("hidden");
+
+    document.getElementById("viewQuiz")
+        .classList.remove("hidden");
+
     shuffledQuestions = questions
         .sort(() => Math.random() - 0.5)
         .map(q => shuffleQuestionOptions(q));
@@ -488,13 +514,15 @@ document.getElementById("viewQuiz")
     timeElapsed = 0;
 
     document.getElementById("playerDisplay").textContent =
-        userData.name;
+        currentUser.name;
+
+    document.getElementById("jobDisplay").textContent =
+        currentUser.job;
 
     startTimer();
     loadQuestion();
     setupNavigationListeners();
 }
-
 function setupNavigationListeners() {
 
     const btnPrev = document.getElementById('btnPrev');
