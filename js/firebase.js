@@ -54,23 +54,24 @@ export async function guardarResultado(
 }
 
 export async function obtenerRanking() {
-
-    const resultadosRef =
-        collection(db, "resultados");
-
-    const q =
-        query(resultadosRef,
-        orderBy("puntaje", "desc"));
-
-    const querySnapshot =
-        await getDocs(q);
+    const resultadosRef = collection(db, "resultados");
+    
+    // Obtenemos los documentos sin el filtro de ordenamiento por ahora
+    const querySnapshot = await getDocs(resultadosRef);
 
     const listaRanking = [];
-
     querySnapshot.forEach((doc) => {
-
-        listaRanking.push(doc.data());
+        const data = doc.data();
+        // Aseguramos que los datos lleguen aunque falte algún campo
+        listaRanking.push({
+            id: doc.id,
+            nombre: data.nombre || "Sin nombre",
+            nota: data.nota || 0,
+            puntaje: data.puntaje || 0,
+            rol: data.rol || "Participante"
+        });
     });
 
+    console.log("Datos obtenidos de Firebase:", listaRanking); 
     return listaRanking;
 }
