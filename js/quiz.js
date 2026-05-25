@@ -722,9 +722,6 @@ function showResults(score, timeElapsed) {
     const notaFinalFormateada =
         notaCalculada.toFixed(1);
 
-    document.getElementById('diplomaName').textContent =
-        currentUser.name;
-
     document.getElementById('diplomaMeta').textContent =
         `Rol: ${currentUser.userType} | Cargo: ${currentUser.job}`;
 
