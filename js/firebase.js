@@ -1,23 +1,59 @@
-import { obtenerRanking } from "./firebase.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-async function cargarRanking() {
-    const containerTop = document.getElementById("top5List");
-    const containerAll = document.getElementById("participantsList");
-    
-    if (!containerTop) return;
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    try {
-        const datos = await obtenerRanking();
-        datos.sort((a, b) => parseFloat(b.nota) - parseFloat(a.nota));
-        
-        containerTop.innerHTML = datos.slice(0, 5).map((p, i) => 
-            `<div style="margin:10px;">${i+1}. ${p.nombre} - ${p.nota}</div>`).join('');
-        
-        containerAll.innerHTML = datos.map((p, i) => 
-            `<div style="border-bottom:1px solid #ccc;">${i+1}. ${p.nombre} | ${p.nota}</div>`).join('');
-    } catch (e) {
-        console.error("Error cargando ranking", e);
-    }
+const firebaseConfig = {
+
+    apiKey: "TU_API_KEY",
+
+    authDomain: "TU_AUTH_DOMAIN",
+
+    projectId: "TU_PROJECT_ID",
+
+    storageBucket: "TU_STORAGE_BUCKET",
+
+    messagingSenderId: "TU_MESSAGING_SENDER_ID",
+
+    appId: "TU_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+export async function guardarResultado(
+    nombre,
+    porcentaje,
+    rol,
+    nota
+) {
+
+    await addDoc(collection(db, "resultados"), {
+
+        nombre,
+        porcentaje,
+        rol,
+        nota,
+        fecha: new Date()
+    });
 }
 
-document.addEventListener("DOMContentLoaded", cargarRanking);
+export async function obtenerRanking() {
+
+    const querySnapshot =
+        await getDocs(collection(db, "resultados"));
+
+    let resultados = [];
+
+    querySnapshot.forEach((doc) => {
+
+        resultados.push(doc.data());
+    });
+
+    return resultados;
+}
