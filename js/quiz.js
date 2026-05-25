@@ -168,7 +168,7 @@ const questions = [
         id: 20, 
         text: "Di el nombre de los periódicos en los que trabajó el P. Gras", 
         options: [
-            "“La España Cristiana” y “La Regeneración”",
+            "“La España Cristiana” y “La Regeneration”",
             "“La España Católica” y “La Restauración”",
             "“El Paladín Católico” y “La Regeneración”",
             "“La España Católica” y “La Regeneración”",
@@ -270,7 +270,7 @@ const questions = [
         id: 31, 
         text: "¿Por qué titula a su revista “El Bien”?", 
         options: [
-            "Porque Cristo es el Bien personal, social, universal, inmenso, eterno e infinito.",
+            "Ref. Cristo es el Bien personal, social, universal, inmenso, eterno e infinito.",
             "Porque Cristo es el Bien individual, social, universal, inmenso, eterno e infinito.",
             "Porque Cristo es el Bien individual, familiar, universal, inmenso, eterno e infinito.",
             "Porque Cristo es el Bien individual, social, eclesial, inmenso, eterno y divino.",
@@ -488,6 +488,27 @@ function initializeQuiz() {
 
     startTimer();
     loadQuestion();
+    setupNavigationListeners();
+}
+
+// Vincula dinámicamente los escuchadores de eventos eliminando los atributos onclick antiguos
+function setupNavigationListeners() {
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const btnFinish = document.getElementById('btnFinish');
+
+    if (btnPrev) {
+        btnPrev.removeAttribute('onclick');
+        btnPrev.addEventListener('click', previousQuestion);
+    }
+    if (btnNext) {
+        btnNext.removeAttribute('onclick');
+        btnNext.addEventListener('click', nextQuestion);
+    }
+    if (btnFinish) {
+        btnFinish.removeAttribute('onclick');
+        btnFinish.addEventListener('click', finishQuiz);
+    }
 }
 
 function loadQuestion() {
@@ -555,16 +576,8 @@ function selectOption(index) {
     });
 }
 
-function ensureAnswerSelected() {
-    if (typeof userAnswers[currentQuestionIndex] !== 'number') {
-        alert('Debes responder esta pregunta antes de continuar.');
-        return false;
-    }
-    return true;
-}
-
+// Permite avanzar libremente sin obligar a responder en cada paso intermediario
 function nextQuestion() {
-    if (!ensureAnswerSelected()) return;
     if (currentQuestionIndex < shuffledQuestions.length - 1) {
         currentQuestionIndex++;
         loadQuestion();
@@ -608,8 +621,14 @@ function calculateScore() {
     };
 }
 
+// Al finalizar, se verifica únicamente si hay preguntas pendientes de responder en total
 async function finishQuiz() {
-    if (!ensureAnswerSelected()) return;
+    const totalContestadas = Object.keys(userAnswers).length;
+    if (totalContestadas < shuffledQuestions.length) {
+        alert(`Te faltan responder ${shuffledQuestions.length - totalContestadas} preguntas. Por favor, revísalas antes de finalizar.`);
+        return;
+    }
+
     clearInterval(timerInterval);
 
     const currentUser = JSON.parse(localStorage.getItem('currentUser')) || { name: "Anónimo", userType: "Docente", job: "General" };
@@ -630,7 +649,6 @@ function showResults(score, timeElapsed) {
     const seconds = timeElapsed % 60;
     const currentUser = JSON.parse(localStorage.getItem('currentUser')) || { name: 'Participante', userType: 'Docente', job: 'General' };
 
-    // Ocultar caja del juego de preguntas y activar el contenedor nativo del Diploma
     const quizMainBox = document.getElementById('quizMainBox');
     const viewDiplomaBox = document.getElementById('viewDiplomaBox');
     
@@ -638,15 +656,12 @@ function showResults(score, timeElapsed) {
         quizMainBox.classList.add('hidden-view');
         viewDiplomaBox.classList.remove('hidden-view');
         
-        // --- CÁLCULO DE LA NOTA DE 1.0 A 5.0 (OPCIÓN A) SIN ALTERAR EL DISEÑO ---
         const notaCalculada = 1.0 + ((score.correct / score.total) * 4.0);
         const notaFinalFormateada = notaCalculada.toFixed(1);
 
-        // Inyectar de forma limpia los datos calculados en el Diploma Estructurado
         document.getElementById('diplomaName').textContent = currentUser.name;
         document.getElementById('diplomaMeta').textContent = `Rol: ${currentUser.userType} | Cargo/Dependencia: ${currentUser.job || 'General'}`;
         
-        // Aquí concatenamos el porcentaje original junto con la nueva nota en la misma línea
         document.getElementById('diplomaScore').textContent = `${score.percentage}% (Nota: ${notaFinalFormateada})`;
         
         document.getElementById('diplomaTime').textContent = `Tiempo empleado: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')} min`;
