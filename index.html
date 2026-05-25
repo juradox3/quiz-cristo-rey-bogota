@@ -898,19 +898,22 @@
 
     </div>
 
-    <script>
-        // Función requerida para manejar visibilidad de campos de registro
-       <script>
-    function toggleJobField() {
-        const userType = document.getElementById("userType").value;
-        const jobPosition = document.getElementById("jobPosition");
-        
-        if(userType === "Mantenimiento" || userType === "Servicios Generales") {
-            jobPosition.placeholder = "Ej: Operario, Servicios, etc.";
-        } else {
-            jobPosition.placeholder = "Ej: Docente de Primaria, Coordinador, etc.";
-        }
+   <script>
+function toggleJobField() {
+    const userType = document.getElementById("userType").value;
+    const jobPosition = document.getElementById("jobPosition");
+
+    if (
+        userType === "Mantenimiento" ||
+        userType === "Servicios Generales"
+    ) {
+        jobPosition.placeholder =
+            "Ej: Operario, Servicios, etc.";
+    } else {
+        jobPosition.placeholder =
+            "Ej: Docente de Primaria, Coordinador, etc.";
     }
+}
 </script>
 
 <script type="module" src="js/firebase.js"></script>
