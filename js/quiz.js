@@ -734,7 +734,6 @@ function showResults(score, timeElapsed) {
    document.getElementById('diplomaTime').textContent =
     `Tiempo: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 }
-
 function navigateToView(viewId) {
 
     document.querySelectorAll(".view-card").forEach(view => {
