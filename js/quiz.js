@@ -1,17 +1,6 @@
 // En tu js/quiz.js
 import { guardarResultado } from "./firebase.js";
 
-// En lugar de poner onclick en el HTML, haz esto:
-document.addEventListener("DOMContentLoaded", () => {
-    const boton = document.getElementById("tuBotonID"); // Cambia por el ID de tu botón
-    if (boton) {
-        boton.addEventListener("click", () => {
-            // Llama a tu función aquí
-            initializeQuiz(); 
-        });
-    }
-});
-
 const questions = [
     { 
         id: 1, 
@@ -483,22 +472,13 @@ function shuffleQuestionOptions(question) {
 
 function initializeQuiz() {
 
-    const userData = {
-        name: document.getElementById("fullName").value,
-        userType: document.getElementById("userType").value,
-        job: document.getElementById("jobPosition").value
-    };
+    const userData = JSON.parse(localStorage.getItem("currentUser"));
+   document.getElementById("viewAccess")
+    .classList.add("hidden");
 
-    if (!userData.name || !userData.userType || !userData.job) {
-        alert("Por favor completa todos los campos.");
-        return;
-    }
-
-    localStorage.setItem("currentUser", JSON.stringify(userData));
-
-    document.getElementById("viewAccess").classList.add("hidden");
-    document.getElementById("viewQuiz").classList.remove("hidden");
-
+document.getElementById("viewQuiz")
+    .classList.remove("hidden");
+    
     shuffledQuestions = questions
         .sort(() => Math.random() - 0.5)
         .map(q => shuffleQuestionOptions(q));
@@ -510,8 +490,8 @@ function initializeQuiz() {
     document.getElementById("playerDisplay").textContent =
         userData.name;
 
-    document.getElementById("jobDisplay").textContent =
-        `${userData.userType} | ${userData.job}`;
+   document.getElementById("userName").textContent =
+        userData.name;
 
     startTimer();
     loadQuestion();
@@ -751,76 +731,21 @@ function showResults(score, timeElapsed) {
     document.getElementById('diplomaScore').textContent =
         `${score.percentage}% (Nota ${notaFinalFormateada})`;
 
-    document.getElementById('diplomaTime').textContent =
-        `Tiempo: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+   document.getElementById('diplomaTime').textContent =
+    `Tiempo: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 }
 
-window.initializeQuiz = initializeQuiz; 
-window.nextQuestion = nextQuestion;
-window.previousQuestion = previousQuestion;
-window.finishQuiz = finishQuiz;
-window.navigateToView = navigateToView;
-window.fullApplicationReset = fullApplicationReset;
 function navigateToView(viewId) {
 
     document.querySelectorAll(".view-card").forEach(view => {
-
         view.classList.add("hidden");
-
     });
 
     document.getElementById(viewId).classList.remove("hidden");
-
 }
 
-
-
 function fullApplicationReset() {
-
     location.reload();
-    async function cargarRanking() {
-
-    const rankingContainer =
-        document.getElementById("rankingContainer");
-
-    if (!rankingContainer) return;
-
-    rankingContainer.innerHTML =
-        "<p>Cargando ranking...</p>";
-
-    try {
-
-        const ranking = await obtenerRanking();
-
-        rankingContainer.innerHTML = "";
-
-        ranking.forEach((jugador, index) => {
-
-            const item = document.createElement("div");
-
-            item.className = "ranking-item";
-
-            item.innerHTML = `
-                <div>
-                    <strong>#${index + 1}</strong>
-                    ${jugador.nombre}
-                </div>
-
-                <div>
-                    ${jugador.puntaje}%
-                </div>
-            `;
-
-            rankingContainer.appendChild(item);
-        });
-
-    } catch (error) {
-
-        console.error(error);
-
-        rankingContainer.innerHTML =
-            "<p>Error cargando ranking</p>";
-    }
 }
 
 window.initializeQuiz = initializeQuiz;
@@ -829,11 +754,3 @@ window.previousQuestion = previousQuestion;
 window.finishQuiz = finishQuiz;
 window.navigateToView = navigateToView;
 window.fullApplicationReset = fullApplicationReset;
-
-window.onload = () => {
-
-    cargarRanking();
-
-};
-
-}
