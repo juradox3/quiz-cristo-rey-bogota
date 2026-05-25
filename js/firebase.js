@@ -1,28 +1,23 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { obtenerRanking } from "./firebase.js";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDbHYxo5U1jxuI07N67ctDmpCCwMx8tEzQ",
-    authDomain: "colegio-cristo-rey-bogota.firebaseapp.com",
-    projectId: "colegio-cristo-rey-bogota",
-    storageBucket: "colegio-cristo-rey-bogota.firebasestorage.app",
-    messagingSenderId: "280577830914",
-    appId: "1:280577830914:web:8366424c2af3c64d74f71b"
-};
+async function cargarRanking() {
+    const containerTop = document.getElementById("top5List");
+    const containerAll = document.getElementById("participantsList");
+    
+    if (!containerTop) return;
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-export async function obtenerRanking() {
     try {
-        const querySnapshot = await getDocs(collection(db, "resultados"));
-        const lista = [];
-        querySnapshot.forEach((doc) => {
-            lista.push({ id: doc.id, ...doc.data() });
-        });
-        return lista;
+        const datos = await obtenerRanking();
+        datos.sort((a, b) => parseFloat(b.nota) - parseFloat(a.nota));
+        
+        containerTop.innerHTML = datos.slice(0, 5).map((p, i) => 
+            `<div style="margin:10px;">${i+1}. ${p.nombre} - ${p.nota}</div>`).join('');
+        
+        containerAll.innerHTML = datos.map((p, i) => 
+            `<div style="border-bottom:1px solid #ccc;">${i+1}. ${p.nombre} | ${p.nota}</div>`).join('');
     } catch (e) {
-        console.error("Error obteniendo documentos: ", e);
-        return [];
+        console.error("Error cargando ranking", e);
     }
 }
+
+document.addEventListener("DOMContentLoaded", cargarRanking);
