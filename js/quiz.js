@@ -1,4 +1,4 @@
-import { guardarResultado } from "./firebase.js";
+import { guardarResultado, obtenerRanking } from "./firebase.js";
 
 const questions = [
     { 
@@ -75,7 +75,7 @@ const questions = [
     },
     { 
         id: 11, 
-        text: "¿Por qué considera el P. Gras como importante la Adoración a Jesús en la Eucaristía?", 
+        text: "¿Por qué considera el Padre Gras como importante la Adoración a Jesús en la Eucaristía?", 
         options: [
             "Porque la Eucaristía “es la suprema y eterna demostración del amor que Dios manifiesta a las almas”",
             "Porque la Eucaristía “es la suprema e inefable prueba del amor que Dios tiene a la humanidad”",
@@ -147,7 +147,7 @@ const questions = [
     },
     { 
         id: 18, 
-        text: "¿Cómo se llamaba la obra en la que colaboró P. Gras con el P. Francisco Palau?", 
+        text: "¿Cómo se llamaba la obra en la que colaboró Padre Gras con el Padre Francisco Palau?", 
         options: ["La Escuela de Cristo.", "La Escuela del Bien.", "La Escuela de Virtud.", "La Escuela Carismática.", "La Academia de Virtud."], 
         correct: 2 
     },
@@ -165,7 +165,7 @@ const questions = [
     },
     { 
         id: 20, 
-        text: "Di el nombre de los periódicos en los que trabajó el P. Gras", 
+        text: "Di el nombre de los periódicos en los que trabajó el Padre Gras", 
         options: [
             "“La España Cristiana” and “La Regeneración”",
             "“La España Católica” and “La Restauración”",
@@ -183,7 +183,7 @@ const questions = [
     },
     { 
         id: 22, 
-        text: "En qué tiempo Litúrgico fue ordenado sacerdote el P. Gras?", 
+        text: "En qué tiempo Litúrgico fue ordenado sacerdote el Padre Gras?", 
         options: ["En Adviento.", "En Cuaresma.", "En Tiempo Ordinario.", "En Pascua.", "En Navidad."], 
         correct: 1 
     },
@@ -297,7 +297,7 @@ const questions = [
     },
     { 
         id: 35, 
-        text: "¿En qué medio de transporte bajaba de la Abadía al noviciado el P. Gras?", 
+        text: "¿En qué medio de transporte bajaba de la Abadía al noviciado el Padre Gras?", 
         options: ["En caballo.", "En burra.", "A pie.", "En carruaje.", "En mula."], 
         correct: 1 
     },
@@ -375,7 +375,7 @@ const questions = [
     },
     { 
         id: 45, 
-        text: "Actualmente dónde se encuentran los restos del P. Gras? ¿En qué país, ciudad y casa?", 
+        text: "Actualmente dónde se encuentran los restos del Padre Gras? ¿En qué país, ciudad y casa?", 
         options: [
             "En España, Granada, Casa de San Gregorio (Albaycín).",
             "En España, Lérida, Casa de San Gregorio (Albaycín).",
