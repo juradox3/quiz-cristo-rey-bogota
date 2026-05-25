@@ -743,4 +743,28 @@ function showResults(score, timeElapsed) {
         `Tiempo: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 }
 
-window.initializeQuiz = initializeQuiz;
+window.initializeQuiz = initializeQuiz; 
+window.nextQuestion = nextQuestion;
+window.previousQuestion = previousQuestion;
+window.finishQuiz = finishQuiz;
+window.navigateToView = navigateToView;
+window.fullApplicationReset = fullApplicationReset;
+function navigateToView(viewId) {
+
+    document.querySelectorAll(".view-card").forEach(view => {
+
+        view.classList.add("hidden");
+
+    });
+
+    document.getElementById(viewId).classList.remove("hidden");
+
+}
+
+
+
+function fullApplicationReset() {
+
+    location.reload();
+
+}
