@@ -23,13 +23,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Guardar resultado incluyendo el rol del participante
-export async function guardarResultado(nombre, puntaje, rol = "No especificado") {
+// Guardar resultado incluyendo el rol del participante y su nota de 1.0 a 5.0
+export async function guardarResultado(nombre, puntaje, rol = "No especificado", nota = "0.0") {
     try {
         await addDoc(collection(db, "resultados"), {
             nombre: nombre,
             puntaje: Number(puntaje),
             rol: rol,
+            nota: Number(nota), // Guardamos la nota como un número decimal en Firebase
             fecha: new Date().toISOString()
         });
     } catch (error) {

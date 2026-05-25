@@ -2,26 +2,450 @@
 import { guardarResultado } from "./firebase.js";
 
 const questions = [
-    { id: 1, text: "¿Dónde nació José Gras?", options: ["Agramunt (Lérida)", "Barcelona", "Madrid", "Valencia", "Granada"], correct: 0 },
-    { id: 2, text: "¿Cuándo nació José Gras?", options: ["22 de enero de 1834", "15 de marzo de 1835", "3 de mayo de 1836", "18 de julio de 1832", "25 de diciembre de 1833"], correct: 0 },
-    { id: 3, text: "¿Qué profesión tenían sus padres?", options: ["Eran campesinos", "Eran comerciantes", "Eran pastores", "Eran artesanos", "Eran educadores de pueblo"], correct: 0 },
-    { id: 4, text: "¿Cuándo fue ordenado sacerdote José Gras?", options: ["20 de marzo de 1858", "15 de abril de 1860", "5 de marzo de 1856", "1 de enero de 1860", "12 de octubre de 1857"], correct: 0 },
-    { id: 5, text: "¿El Padre Gras fue:?", options: ["Diocesano", "Religioso", "Jesuita", "Franciscano", "Carmelita"], correct: 0 },
-    { id: 6, text: "¿Cómo se llamaba la congregación dedicada a la enseñanza que fundo José Gras cuando era sacerdote?", options: ["Hijas de Cristo Rey", "Hijas de María", "Hijas del Sagrado Corazón", "Hijas de la Cruz", "Hijas de San José"], correct: 0 },
-    { id: 7, text: "¿En qué fecha funda el Instituto de las Hijas de Cristo Rey?", options: ["26 de mayo de 1876", "15 de marzo de 1875", "1 de junio de 1877", "10 de enero de 1878", "24 de diciembre de 1875"], correct: 0 },
-    { id: 8, text: "¿Cuál es la misión de las Hijas de Cristo Rey?", options: ["Hacer reinar a Cristo", "Formar profesionales", "Atender enfermos", "Evangelizar en las plazas", "Custodiar templos antiguos"], correct: 0 },
-    { id: 9, text: "¿En qué año llegaron las Hijas de Cristo Rey a Colombia?", options: ["1960", "1950", "1970", "1980", "1965"], correct: 0 },
-    { id: 10, text: "¿A qué edad murió José Gras?", options: ["A los 84 años", "A los 75 años", "A los 90 años", "A los 80 años", "A los 72 años"], correct: 0 },
-    { id: 11, text: "¿Qué secreto le contó Jesús a José Gras?", options: ["Muchos hombres no me quieren y no quieren que yo reine en su corazón", "El reino de Dios ya está cerca", "Amaos los unos a los otros", "Busca siempre la verdad", "Predica el evangelio a los reyes de la tierra"], correct: 0 },
-    { id: 12, text: "¿Qué idea perseguía José Gras con la publicación del Paladín de Cristo?", options: ["Encender en amor de Cristo los corazones para hacerle reinar en ellos", "Aumentar las vocaciones sacerdotales", "Buscar apoyo para la congregación", "Denunciar los abusos de la época", "Recaudar fondos para las misiones de ultramar"], correct: 0 },
-    { id: 13, text: "¿Con qué objeto se inscribió José Gras en la Academia Bibliográfica Mariana?", options: ["Publicar y propagar libros y escritos referentes únicamente a la Madre de Dios", "Organizar eventos marianos", "Formar nuevos sacerdotes", "Viajar por Europa", "Catalogar archivos históricos vaticanos"], correct: 0 },
-    { id: 14, text: "¿Qué hecho ocurrido en 1863 conmovió profundamente a José Gras?", options: ["La publicación de La vida de Jesús de Ernesto Renán, donde se niega la divinidad de Cristo", "La llegada de una epidemia a España", "El cierre de una iglesia", "La muerte de su padre", "El exilio forzado de las órdenes religiosas"], correct: 0 },
-    { id: 15, text: "¿A qué se dedicaba la Academia y Corte de Cristo?", options: ["Era una asociación religioso-literaria que defendía la divinidad de Cristo y le desagraviaba con la adoración eucarística", "Organizaba eventos deportivos", "Formaba maestros", "Atendía a los pobres", "Promovía el canto gregoriano en Europa"], correct: 0 },
-    { id: 16, text: "¿Por qué el Padre Gras tituló su revista 'El Bien'?", options: ["Reflejar que Cristo es el Bien individual, social, universal, inmenso, eterno e infinito", "Porque quería promover el bienestar social", "Porque era una revista para buenos hábitos", "Porque trataba sobre salud", "Porque buscaba erradicar la pobreza material"], correct: 0 },
-    { id: 17, text: "¿Qué decreto recibió el Instituto de la Santa Sede el 15 de febrero de 1898?", options: ["El Decretum Laudis", "La Bula Papal", "El Decreto de Aprobación", "La Carta Magna", "El Breve Apostólico"], correct: 0 },
-    { id: 18, text: "¿Para qué trabajó incansablemente José Gras según el decreto con el que fue declarado venerable?", options: ["Para que Cristo reinara en el corazón de todo hombre, en la familia y en la sociedad", "Para expandir la congregación por el mundo", "Para lograr la beatificación", "Para escribir más libros", "Para reformar las leyes educativas del país"], correct: 0 },
-    { id: 19, text: "¿Qué significa la educación como 'segunda creación'?", options: ["Continuar la acción creadora de Dios y Cristo, moldeando las mentes y dando oportunidades", "Enseñar ciencias naturales", "Promover la creatividad artística", "Repetir lo que ya existe", "Reestructurar los modelos pedagógicos del gobierno"], correct: 0 },
-    { id: 20, text: "¿Cristo Reina es:?", options: ["Un llamado a transformar la vida y la sociedad; profesión de fe, amor y dogma de salvación; proclamación de la soberanía de Cristo sobre la humanidad y el universo", "Una frase de la Biblia", "Un lema escolar para eventos deportivos", "Una tradición local", "El encabezado oficial de las cartas parroquiales"], correct: 0 }
+    { 
+        id: 1, 
+        text: "¿Dónde nació José Gras?", 
+        options: ["En Agramunt (Lérida)", "En Barbastro (Lérida)", "En Agramunt (Gerona)", "En Manresa (Lérida)", "En Balaguer (Gerona)"], 
+        correct: 0 
+    },
+    { 
+        id: 2, 
+        text: "¿Cuándo nació José Gras?", 
+        options: ["El 22 de marzo de 1834.", "El 23 de enero de 1834.", "El 22 de enero de 1835.", "El 22 de enero de 1834.", "El 24 de enero de 1834."], 
+        correct: 3 
+    },
+    { 
+        id: 3, 
+        text: "Nombre de sus padres", 
+        options: ["Juan y Rosa.", "José y Rosa.", "Juan y Rita.", "Pedro y Rosa.", "Juan y María."], 
+        correct: 0 
+    },
+    { 
+        id: 4, 
+        text: "Nombre de sus hermanos", 
+        options: ["Gertrudis, Antonia y Juan", "Gertrudis, Ana y Ramón", "Gertrudis, Antonia y Ramón", "Gabriela, Antonia y Ramón", "Gertrudis, Teresa y Ramón"], 
+        correct: 2 
+    },
+    { 
+        id: 5, 
+        text: "Fecha en que fue bautizado", 
+        options: ["22 de enero de 1834.", "23 de enero de 1834.", "24 de enero de 1834.", "23 de marzo de 1834.", "25 de enero de 1834."], 
+        correct: 1 
+    },
+    { 
+        id: 6, 
+        text: "¿A qué edad recibió la confirmación?", 
+        options: ["5 años.", "7 años.", "2 años.", "4 años.", "3 años."], 
+        correct: 4 
+    },
+    { 
+        id: 7, 
+        text: "¿En qué año se confirmó?", 
+        options: ["En 1834.", "En 1837.", "En 1836.", "En 1838.", "En 1840."], 
+        correct: 1 
+    },
+    { 
+        id: 8, 
+        text: "¿Quién bautizó a José Gras?", 
+        options: [
+            "El padre dominico Ramón Domenech.",
+            "El padre franciscano José Domenech.",
+            "El padre franciscano Ramón Domenech.",
+            "El padre jesuita Ramón Domenech.",
+            "El obispo franciscano Ramón Domenech."
+        ], 
+        correct: 2 
+    },
+    { 
+        id: 9, 
+        text: "¿Qué profesión tenían sus padres?", 
+        options: ["Eran artesanos.", "Eran comerciantes.", "Eran pastores.", "Eran campesinos.", "Eran tejedores."], 
+        correct: 3 
+    },
+    { 
+        id: 10, 
+        text: "¿Qué secreto le contó Jesús a José Gras?", 
+        options: [
+            "Muchos hombres me olvidan y no quieren que yo habite en su corazón.",
+            "Muchos hombres no me quieren y no permiten que yo gobierne en su mente.",
+            "Muchos hombres se alejan y no quieren que mi reino llegue a su corazón.",
+            "Muchos hombres no me quieren y no quieren que yo reine en su corazón.",
+            "Muchos hombres me rechazan y no desean que yo reine en sus familias."
+        ], 
+        correct: 3 
+    },
+    { 
+        id: 11, 
+        text: "¿Por qué considera el P. Gras como importante la Adoración a Jesús en la Eucaristía?", 
+        options: [
+            "Porque la Eucaristía “es la suprema y eterna demostración del amor que Dios manifiesta a las almas”",
+            "Porque la Eucaristía “es la suprema e inefable prueba del amor que Dios tiene a la humanidad”",
+            "Porque la Eucaristía “es la misteriosa e inefable muestra del amor que Cristo ofrece a la iglesia”",
+            "Porque la Eucaristía “es la primera e inefable prueba de la entrega que Dios hace a la humanidad”",
+            "Porque la Eucaristía “es la viva e inefable prueba del amor que el Padre tiene a sus hijos”"
+        ], 
+        correct: 1 
+    },
+    { 
+        id: 12, 
+        text: "¿De pequeño en sus tiempos libres a qué se dedicaba José?", 
+        options: ["Se dedicaba al estudio.", "Se dedicaba al trabajo.", "Se dedicaba a la oración.", "Se dedicaba a la lectura.", "Se dedicaba al pastoreo."], 
+        correct: 2 
+    },
+    { 
+        id: 13, 
+        text: "¿Cuándo era niño José que soñaba ser de grande?", 
+        options: ["Quería ser Sacerdote.", "Quería ser Periodista.", "Quería ser Educador.", "Quería ser Misionero.", "Quería ser Monje."], 
+        correct: 0 
+    },
+    { 
+        id: 14, 
+        text: "Además de asistir a la escuela ¿qué estudiaba de niño?", 
+        options: [
+            "Estudió filosofía con el vicario del pueblo.",
+            "Estudió latín con el párroco del pueblo.",
+            "Estudió latín con el maestro del pueblo.",
+            "Estudió teología con el párroco del pueblo.",
+            "Estudió francés con el párroco del pueblo."
+        ], 
+        correct: 1 
+    },
+    { 
+        id: 15, 
+        text: "¿Qué pasó cuando José tenía 12 años?", 
+        options: [
+            "Viajó a Madrid para ingresar al Seminario.",
+            "Viajó a Tarragona para ingresar al colegio.",
+            "Viajó a Barcelona para ingresar al Seminario.",
+            "Viajó a Lérida para trabajar en el campo.",
+            "Viajó a Granada para iniciar sus estudios."
+        ], 
+        correct: 2 
+    },
+    { 
+        id: 16, 
+        text: "¿En qué año empezó a estudiar retórica?", 
+        options: [
+            "Estudió retórica que es el arte de expresarse en Barcelona, año 1847.",
+            "Estudió teología que es el arte de expresarse en Barcelona, año 1846.",
+            "Estudió retórica que es el arte de expresarse en Tarragona, año 1846.",
+            "Estudió retórica que es el arte de expresarse en Barcelona, año 1845.",
+            "Estudió retórica que es el arte de expresarse en Barcelona, año 1846."
+        ], 
+        correct: 4 
+    },
+    { 
+        id: 17, 
+        text: "¿En qué año ingresa al seminario de Barcelona José Gras?", 
+        options: [
+            "En 1846 cuando tenía 12 años.",
+            "En 1847 cuando tenía 13 años.",
+            "En 1848 cuando tenía 14 años.",
+            "En 1847 cuando tenía 14 años.",
+            "En 1850 cuando tenía 16 años."
+        ], 
+        correct: 1 
+    },
+    { 
+        id: 18, 
+        text: "¿Cómo se llamaba la obra en la que colaboró P. Gras con el P. Francisco Palau?", 
+        options: ["La Escuela de Cristo.", "La Escuela del Bien.", "La Escuela de Virtud.", "La Escuela Carismática.", "La Academia de Virtud."], 
+        correct: 2 
+    },
+    { 
+        id: 19, 
+        text: "Cuando se hizo periodista ¿cuál fue el primer artículo que escribió?", 
+        options: [
+            "“El triunfo del bien y del mal”.",
+            "El progreso del bien y del mal”.",
+            "“El progreso del bien sobre el mal”.",
+            "“El camino del bien y del mal”.",
+            "“El progreso de la verdad y del mal”."
+        ], 
+        correct: 1 
+    },
+    { 
+        id: 20, 
+        text: "Di el nombre de los periódicos en los que trabajó el P. Gras", 
+        options: [
+            "“La España Cristiana” y “La Regeneración”",
+            "“La España Católica” y “La Restauración”",
+            "“El Paladín Católico” y “La Regeneración”",
+            "“La España Católica” y “La Regeneración”",
+            "“El Bien Católico” y “La Regeneración”"
+        ], 
+        correct: 3 
+    },
+    { 
+        id: 21, 
+        text: "¿Cuándo fue ordenado sacerdote?", 
+        options: ["El 20 de marzo de 1858.", "El 25 de marzo de 1858.", "El 20 de abril de 1858.", "El 4 de abril de 1858.", "El 20 de marzo de 1856."], 
+        correct: 0 
+    },
+    { 
+        id: 22, 
+        text: "¿En qué tiempo Litúrgico fue ordenado sacerdote el P. Gras?", 
+        options: ["En Adviento.", "En Cuaresma.", "En Tiempo Ordinario.", "En Pascua.", "En Navidad."], 
+        correct: 1 
+    },
+    { 
+        id: 23, 
+        text: "¿El P. Gras fue sacerdote, diocesano o religioso?", 
+        options: ["Religioso.", "Jesuita.", "Diocesano.", "Franciscano.", "Monacal."], 
+        correct: 2 
+    },
+    { 
+        id: 24, 
+        text: "¿Cuándo celebra su primera misa cantada?", 
+        options: ["20 de marzo de 1858.", "4 de abril de 1856.", "5 de abril de 1858.", "4 de mayo de 1858.", "4 de abril de 1858."], 
+        correct: 4 
+    },
+    { 
+        id: 25, 
+        text: "¿Por qué se inscribe en la Academia Bibliográfica Mariana?", 
+        options: [
+            "Con el objeto de publicar e imprimir libros y tratados referentes únicamente a la Madre de Dios.",
+            "Con el objeto de escribir y propagar textos y cantos referentes especialmente a la Madre de Dios.",
+            "Con el objeto de publicar y propagar libros y escritos referentes únicamente a la Madre de Dios.",
+            "Con el propósito de coleccionar y propagar libros y escritos referentes únicamente a la Virgen María.",
+            "Con el objeto de publicar y defender libros y dogmas referentes únicamente a la Madre de Dios."
+        ], 
+        correct: 2 
+    },
+    { 
+        id: 26, 
+        text: "Según el Padre Gras, ¿Qué deber tienen los católicos con respecto al derecho de Cristo a reinar?", 
+        options: [
+            "Tienen el deber de proclamarlo.",
+            "Tienen la obligación de difundirlo.",
+            "Tienen el derecho de vivirlo.",
+            "Tienen el deber de defenderlo.",
+            "Tienen el mandato de enseñarlo."
+        ], 
+        correct: 3 
+    },
+    { 
+        id: 27, 
+        text: "¿Qué hecho ocurre en 1863 que conmueve a José Gras?", 
+        options: [
+            "Se publica la vida de Jesús de Ernesto Renán donde se niega la divinidad de Cristo.",
+            "Se publica el Paladín de Cristo de Ernesto Renán donde se ataca la divinidad de Cristo.",
+            "Se publica la vida de Jesús de Ernesto Renán donde se duda de la existencia de Cristo.",
+            "Se edita la historia de Jesús de Ernesto Renán donde se niega la divinidad de Dios.",
+            "Se publica la vida de María de Ernesto Renán donde se niega la divinidad de Cristo."
+        ], 
+        correct: 0 
+    },
+    { 
+        id: 28, 
+        text: "¿Qué libro publica como respuesta al libro de Renán?", 
+        options: ["Paladín de María.", "El Bien.", "Paladín de Cristo.", "Corte de Cristo.", "El triunfo de Cristo."], 
+        correct: 2 
+    },
+    { 
+        id: 29, 
+        text: "¿Qué idea persigue José con la publicación del Paladín de Cristo?", 
+        options: [
+            "Encender en amor de María los corazones para hacerle reinar en ellos.",
+            "Inculcar el amor de Cristo en los corazones para hacerle reinar en ellos.",
+            "Encender en amor de Cristo las almas para hacerle reinar en ellas.",
+            "Encender en amor de Cristo los corazones para hacerle reinar en ellos.",
+            "Propagar el amor de Cristo en el mundo para hacerle reinar en la sociedad."
+        ], 
+        correct: 3 
+    },
+    { 
+        id: 30, 
+        text: "¿A qué se dedicaba la Academia y Corte de Cristo?", 
+        options: [
+            "Era una Asociación literario–religiosa que defendía la soberanía de Cristo y le alababa con la adoración eucarística.",
+            "Era una Asociación religioso–literaria que defienda la divinidad de Cristo y le desagraviaba con la oración perpetua.",
+            "Era una Congregación religioso–literaria que defienda la divinidad de Cristo y le asistía con la adoración eucarística.",
+            "Era una Asociación religioso–literaria que defienda la divinidad de Cristo y le desagravie con la adoración eucarística.",
+            "Era una Sociedad religioso–educativa que defendía la humanidad de Cristo y le desagravie con la adoración eucarística."
+        ], 
+        correct: 3 
+    },
+    { 
+        id: 31, 
+        text: "¿Por qué titula a su revista “El Bien”?", 
+        options: [
+            "Porque Cristo es el Bien personal, social, universal, inmenso, eterno e infinito.",
+            "Porque Cristo es el Bien individual, social, universal, inmenso, eterno e infinito.",
+            "Porque Cristo es el Bien individual, familiar, universal, inmenso, eterno e infinito.",
+            "Porque Cristo es el Bien individual, social, eclesial, inmenso, eterno y divino.",
+            "Porque Jesús es el Bien individual, social, universal, supremo, eterno e infinito."
+        ], 
+        correct: 1 
+    },
+    { 
+        id: 32, 
+        text: "¿Qué lema acompaña la publicación de la revista El Bien?", 
+        options: ["Cristo Salvador.", "Hacer reinar a Cristo.", "Viva Cristo Rey.", "Cristo reina.", "Venga tu Reino."], 
+        correct: 3 
+    },
+    { 
+        id: 33, 
+        text: "¿Cómo se llama la congregación dedicada a la enseñanza que fundó José Gras cuando era sacerdote?", 
+        options: ["Hijas de María Inmaculada.", "Hijas del Sagrado Corazón.", "Hijas de Cristo Rey.", "Hijas de la Iglesia.", "Hijas de San José."], 
+        correct: 2 
+    },
+    { 
+        id: 34, 
+        text: "¿En qué fecha funda el Instituto de las Hijas de Cristo Rey?", 
+        options: ["El 26 de mayo de 1876.", "El 15 de diciembre de 1866.", "El 26 de mayo de 1875.", "El 16 de agosto de 1901.", "El 7 de julio de 1918."], 
+        correct: 0 
+    },
+    { 
+        id: 35, 
+        text: "¿En qué medio de transporte bajaba de la Abadía al noviciado el P. Gras?", 
+        options: ["En caballo.", "En burra.", "A pie.", "En carruaje.", "En mula."], 
+        correct: 1 
+    },
+    { 
+        id: 36, 
+        text: "¿Cuáles son los valores institucionales que se compromete a vivir el Colegio Cristo Rey Bogotá?", 
+        options: [
+            "Vida, amor, verdad, justicia y libertad.",
+            "Fe, amor, verdad, justicia y paz.",
+            "Vida, amor, bien, justicia y paz.",
+            "Vida, caridad, verdad, justicia y paz.",
+            "Vida, amor, verdad, justicia y paz."
+        ], 
+        correct: 4 
+    },
+    { 
+        id: 37, 
+        text: "¿Qué decreto recibe el Instituto de la Santa Sede en Roma el 15 de febrero de 1898?", 
+        options: ["La Bula de Aprobación.", "El Decretum Laudis.", "El Decreto de Alabanza.", "El Breve Apostólico.", "La Bula Papal."], 
+        correct: 1 
+    },
+    { 
+        id: 38, 
+        text: "¿En qué año se prueba definitivamente el Instituto de Hijas de Cristo Rey?", 
+        options: ["El 26 de mayo de 1876.", "El 15 de febrero de 1898.", "El 16 de agosto de 1905.", "El 16 de agosto de 1901.", "El 7 de julio de 1918."], 
+        correct: 3 
+    },
+    { 
+        id: 39, 
+        text: "¿A qué edad murió José Gras?", 
+        options: ["80 años.", "85 años.", "74 años.", "84 años.", "90 años."], 
+        correct: 3 
+    },
+    { 
+        id: 40, 
+        text: "¿En qué fecha murió José Gras?", 
+        options: ["El 7 de julio de 1918.", "El 26 de mayo de 1918.", "El 16 de agosto de 1918.", "El 7 de junio de 1918.", "El 15 de febrero de 1918."], 
+        correct: 0 
+    },
+    { 
+        id: 41, 
+        text: "¿En qué países de Latinoamérica se encuentran las Hijas de Cristo Rey?", 
+        options: [
+            "Colombia, Venezuela, Ecuador y Argentina.",
+            "Colombia, Perú, Chile y Argentina.",
+            "Colombia, Perú, Ecuador y Argentina.",
+            "Colombia, Perú, Ecuador y Brasil.",
+            "México, Perú, Ecuador y Argentina."
+        ], 
+        correct: 2 
+    },
+    { 
+        id: 42, 
+        text: "En qué año llegaron las Hijas de Cristo Rey a Colombia?", 
+        options: ["En 1950.", "En 1960.", "En 1970.", "En 1965.", "En 1976."], 
+        correct: 1 
+    },
+    { 
+        id: 43, 
+        text: "¿Cuál es la misión de las Hijas de Cristo Rey?", 
+        options: ["“Evangelizar en las escuelas”.", "“Servir a los más necesitados”.", "“Hacer reinar a Cristo”.", "“Llevar a Cristo al mundo”.", "“Hacer reinar la paz”."], 
+        correct: 2 
+    },
+    { 
+        id: 44, 
+        text: "¿Para qué se esforzó incansablemente y trabajó sin desmayos según el decreto con el que se declara venerable a José Gras?", 
+        options: [
+            "Para que Cristo gobernara en el corazón de todo hombre, en la familia y en la sociedad.",
+            "Para que Cristo reinara en el corazón de todo hombre, en la familia y en la sociedad.",
+            "Para que Cristo reinara en la mente de todo niño, en la escuela y en la sociedad.",
+            "Para que el Reino de Dios estuviera en el corazón de todo hombre, en la familia y en la sociedad.",
+            "Para que Cristo reinara en el corazón de los IBM, en las familias y en las naciones."
+        ], 
+        correct: 1 
+    },
+    { 
+        id: 45, 
+        text: "Actualmente dónde se encuentran los restos del P. Gras? ¿En qué país, ciudad y casa?", 
+        options: [
+            "En España, Granada, Casa de San Gregorio (Albaycín).",
+            "En España, Lérida, Casa de San Gregorio (Albaycín).",
+            "En España, Granada, Casa de San José (Albaycín).",
+            "En España, Granada, Abadía del Sacro Monte (Albaycín).",
+            "En Italia, Roma, Casa de San Gregorio (Albaycín)."
+        ], 
+        correct: 0 
+    },
+    { 
+        id: 46, 
+        text: "¿Cuáles son las partes de la Eucaristía?", 
+        options: [
+            "A. Ritos iniciales. B. Liturgia de la Palabra. C. Consagración y Comunión. D. Ritos de despedida.",
+            "A. Ritos de entrada. B. Liturgia de la Palabra. C. Liturgia de la Eucaristía. D. Ritos finales.",
+            "A. Ritos iniciales. B. Liturgia de la Palabra. C. Liturgia de la Eucaristía. D. Ritos de despedida.",
+            "A. Ritos iniciales. B. Proclamación de la Palabra. C. Liturgia de la Eucaristía. D. Ritos de envío.",
+            "A. Ritos de apertura. B. Liturgia de la Palabra. C. Liturgia del Sacramento. D. Ritos de conclusión."
+        ], 
+        correct: 2 
+    },
+    { 
+        id: 47, 
+        text: "¿Cuáles son los valores según el pensamiento Educativo de José Gras?", 
+        options: [
+            "AMOR, VERDAD, BIEN, JUSTICIA y VIDA, así como la LIBERTAD, la FE y la PAZ",
+            "AMOR, VERDAD, BIEN, FE y VIDA, así como la LIBERTAD, la JUSTICIA y la PAZ",
+            "AMOR, PAZ, BIEN, FE y VIDA, así como la LIBERTAD, la JUSTICIA y la VERDAD",
+            "CARIDAD, VERDAD, BIEN, FE y VIDA, así como la LIBERTAD, la JUSTICIA y la PAZ",
+            "AMOR, VERDAD, REINO, FE y VIDA, así como la FRATERNIDAD, la JUSTICIA y la PAZ"
+        ], 
+        correct: 1 
+    },
+    { 
+        id: 48, 
+        text: "¿Qué es el PIFE?", 
+        options: [
+            "Proyecto internacional de formación evangélica.",
+            "Proyecto institucional de formación evangélica.",
+            "Plan institucional de formación evangélica.",
+            "Proyecto institucional de educación evangélica.",
+            "Programa institucional de formación evangélica."
+        ], 
+        correct: 1 
+    },
+    { 
+        id: 49, 
+        text: "“Cristo reina” es:", 
+        options: [
+            "Un llamado a transformar nuestra vida y el mundo.\nEs una profesión de fe, amor y dogma de salvación.\nEs una proclamación de la soberanía de Cristo sobre la humanidad y el cosmos.",
+            "Un deber para transformar nuestra vida y la sociedad.\nEs una expresión de fe, amor y dogma de salvación.\nEs una proclamación de la soberanía de Cristo sobre la iglesia y el universo.",
+            "Un llamado a transformar nuestra vida y la sociedad.\nEs una profesión de fe, amor y dogma de salvación.\nEs una proclamación de la soberanía de Cristo sobre la humanidad y el universo.",
+            "Un llamado a cambiar nuestra vida y la sociedad.\nEs una profesión de fe, caridad y dogma de salvación.\nEs una declaración de la soberanía de Cristo sobre la humanidad y el universo.",
+            "Un llamado a transformar nuestra vida y la sociedad.\nEs una profesión de fe, esperanza y camino de salvación.\nEs una proclamación del reinado de Cristo sobre la humanidad y el universo."
+        ], 
+        correct: 2 
+    },
+    { 
+        id: 50, 
+        text: "¿Cuáles son los apartados que comprende el Pensamiento Educativo del Venerable Padre José Gras?", 
+        options: [
+            "Educación, educador, estudiantes y padres de familia.",
+            "Educación, escuela, educandos y padres de familia.",
+            "Pedagogía, educador, educandos y padres de familia.",
+            "Educación, educador, educandos y familia.",
+            "Educación, educador, educandos y padres de familia."
+        ], 
+        correct: 4 
+    }
 ];
 
 let currentQuestionIndex = 0;
@@ -55,7 +479,6 @@ function initializeQuiz() {
     
     const userNameElem = document.getElementById('userName');
     if(userNameElem) {
-        // Muestra Nombre y el nuevo Cargo en la barra superior
         userNameElem.textContent = `${currentUser.name} (${currentUser.job || 'General'})`;
     }
     
@@ -193,7 +616,6 @@ async function finishQuiz() {
     const score = calculateScore();
 
     try {
-        // COMBINACIÓN INTELIGENTE: Se envía el Rol y el Cargo concatenados para no alterar la estructura original de Firebase.
         const compositeRole = `${currentUser.userType} — ${currentUser.job || 'General'}`;
         await guardarResultado(currentUser.name, score.percentage, compositeRole);
     } catch (error) {
@@ -216,10 +638,17 @@ function showResults(score, timeElapsed) {
         quizMainBox.classList.add('hidden-view');
         viewDiplomaBox.classList.remove('hidden-view');
         
+        // --- CÁLCULO DE LA NOTA DE 1.0 A 5.0 (OPCIÓN A) SIN ALTERAR EL DISEÑO ---
+        const notaCalculada = 1.0 + ((score.correct / score.total) * 4.0);
+        const notaFinalFormateada = notaCalculada.toFixed(1);
+
         // Inyectar de forma limpia los datos calculados en el Diploma Estructurado
         document.getElementById('diplomaName').textContent = currentUser.name;
         document.getElementById('diplomaMeta').textContent = `Rol: ${currentUser.userType} | Cargo/Dependencia: ${currentUser.job || 'General'}`;
-        document.getElementById('diplomaScore').textContent = `${score.percentage}%`;
+        
+        // Aquí concatenamos el porcentaje original junto con la nueva nota en la misma línea
+        document.getElementById('diplomaScore').textContent = `${score.percentage}% (Nota: ${notaFinalFormateada})`;
+        
         document.getElementById('diplomaTime').textContent = `Tiempo empleado: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')} min`;
     }
 }
