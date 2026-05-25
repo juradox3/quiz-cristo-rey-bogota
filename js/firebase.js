@@ -8,18 +8,13 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-
-    apiKey: "TU_API_KEY",
-
-    authDomain: "TU_AUTH_DOMAIN",
-
-    projectId: "TU_PROJECT_ID",
-
-    storageBucket: "TU_STORAGE_BUCKET",
-
-    messagingSenderId: "TU_MESSAGING_SENDER_ID",
-
-    appId: "TU_APP_ID"
+  apiKey: "AIzaSyDbHYxo5U1jxuI07N67ctDmpCCwMx8tEzQ",
+  authDomain: "colegio-cristo-rey-bogota.firebaseapp.com",
+  projectId: "colegio-cristo-rey-bogota",
+  storageBucket: "colegio-cristo-rey-bogota.firebasestorage.app",
+  messagingSenderId: "280577830914",
+  appId: "1:280577830914:web:8366424c2af3c64d74f71b",
+  measurementId: "G-H53800V48N"
 };
 
 const app = initializeApp(firebaseConfig);
