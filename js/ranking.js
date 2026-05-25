@@ -1,16 +1,18 @@
 import { obtenerRanking } from "./firebase.js";
 
 async function cargarRanking() {
+    console.log("¡La función cargarRanking se está ejecutando!");
+    
     const containerTop = document.getElementById("top5List");
     const containerAll = document.getElementById("participantsList");
 
-    // Indicador de carga
     if (containerTop) containerTop.innerHTML = "<p>Cargando datos...</p>";
 
     try {
         const datos = await obtenerRanking();
+        console.log("Datos recibidos en ranking.js:", datos);
 
-        // Si no hay datos (base vacía o error en la consulta)
+        // Si no hay datos o la lista está vacía
         if (!datos || datos.length === 0) {
             const msg = `<div style="text-align:center;padding:32px;color:#94a3b8;">📭 Aún no hay participantes registrados.</div>`;
             if (containerTop) containerTop.innerHTML = msg;
@@ -26,7 +28,7 @@ async function cargarRanking() {
 
     } catch (err) {
         console.error("Error crítico al cargar el ranking:", err);
-        if (containerTop) containerTop.innerHTML = "Error de conexión.";
+        if (containerTop) containerTop.innerHTML = "Error al conectar con la base de datos.";
     }
 }
 
@@ -90,6 +92,6 @@ function renderTabla(datos) {
     });
 }
 
+// Ejecutar al cargar y programar refresco
 cargarRanking();
-// Recargar cada 30 segundos
 setInterval(cargarRanking, 30000);
