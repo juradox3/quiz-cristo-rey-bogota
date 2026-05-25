@@ -5,58 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ranking - Hijas de Cristo Rey</title>
     <link rel="stylesheet" href="css/styles.css">
-    <style>
-        /* Ajustes ligeros para mejorar la visualización de los nuevos datos combinados */
-        .ranking-page {
-            background-color: #fafafa;
-        }
-        .meta-tag {
-            display: inline-block;
-            font-size: 11px;
-            color: #64748b;
-            background-color: #f1f5f9;
-            padding: 2px 8px;
-            border-radius: 4px;
-            margin-top: 3px;
-            font-weight: 500;
-        }
-        .table-meta {
-            font-size: 11px;
-            color: #64748b;
-            background-color: #f1f5f9;
-            padding: 2px 6px;
-            border-radius: 3px;
-            margin-left: 8px;
-            font-weight: normal;
-        }
-    </style>
 </head>
 <body class="ranking-page">
     <div class="ranking-container">
         <div class="ranking-header" style="text-align: center;">
             <img src="img/logo-colegio.png" alt="Colegio Cristo Rey" style="max-height: 70px; margin-bottom: 10px;" onerror="this.style.display='none'">
             <h1>Ranking de Participantes</h1>
-            <p>150 años por Cristo y su Reino</p>
         </div>
-
         <div class="top-5-section">
             <h2 class="top-5-title">🏆 Top 5 Mejores</h2>
-            <div class="ranking-list" id="top5List"></div>
+            <div id="top5List">Cargando...</div>
         </div>
-
         <div class="all-participants">
             <h2 class="participants-title">Todos los Participantes</h2>
-            <div class="participants-table" id="participantsTableContainer">
-                <div class="table-header">
-                    <div>POS</div>
-                    <div>PARTICIPANTE / DEPENDENCIA</div>
-                    <div>NOTA</div>
-                </div>
-                <div id="participantsList"></div>
-            </div>
+            <div id="participantsList">Cargando...</div>
         </div>
     </div>
     
-    <script type="module" src="js/ranking.js"></script>
+    <script type="module" src="./js/ranking.js"></script>
 </body>
 </html>
