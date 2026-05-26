@@ -1753,12 +1753,6 @@ h1, h2, h3, h4, h5, h6 {
     border-bottom: 2px solid var(--gold);
 }
 
-.diploma-cross {
-    font-size: 36px;
-    color: var(--primary-blue);
-    margin-bottom: 10px;
-}
-
 .diploma-header h2 {
     font-size: 28px;
     color: var(--dark-blue);
