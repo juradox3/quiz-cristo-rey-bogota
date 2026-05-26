@@ -773,7 +773,7 @@ window.initializeQuiz = initializeQuiz;
 window.nextQuestion = nextQuestion;
 window.previousQuestion = previousQuestion;
 window.finishQuiz = finishQuiz;
-window.navigateToView = navigateToView;
+
 window.navigateToView = function(viewId) {
 
     document.querySelectorAll(".view-card")
@@ -783,7 +783,6 @@ window.navigateToView = function(viewId) {
 
     document.getElementById(viewId)
         .classList.remove("hidden");
-}
-    
-}
+};
+
 window.fullApplicationReset = fullApplicationReset;
