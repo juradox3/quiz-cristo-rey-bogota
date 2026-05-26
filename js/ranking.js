@@ -73,5 +73,3 @@ async function cargarRanking() {
 }
 
 window.cargarRanking = cargarRanking;
-    cargarRanking
-);
