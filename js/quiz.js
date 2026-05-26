@@ -513,7 +513,7 @@ function initializeQuiz() {
     currentQuestionIndex = 0;
     timeElapsed = 0;
 
-    document.getElementById("playerDisplay").textContent =
+  document.getElementById("playerDisplay").textContent =
     currentUser.name;
 
 document.getElementById("jobDisplay").textContent =
@@ -523,7 +523,7 @@ document.getElementById("diplomaName").textContent =
     currentUser.name;
 
 document.getElementById("diplomaMeta").textContent =
-    `Rol: ${currentUser.job}`;
+    `Rol: ${currentUser.role} | Cargo: ${currentUser.job}`;
 
     startTimer();
     loadQuestion();
