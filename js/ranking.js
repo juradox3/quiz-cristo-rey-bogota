@@ -63,7 +63,7 @@ async function cargarRanking() {
             </div>
         `).join("");
 
-    } catch (e) {
+     } catch (e) {
 
         console.error(
             "Error cargando ranking",
@@ -72,7 +72,6 @@ async function cargarRanking() {
     }
 }
 
-document.addEventListener(
-    "DOMContentLoaded",
+window.cargarRanking = cargarRanking;
     cargarRanking
 );
