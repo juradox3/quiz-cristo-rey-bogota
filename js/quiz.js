@@ -748,7 +748,7 @@ function showResults(score, timeElapsed) {
         .classList.remove("hidden");
 
     const notaCalculada =
-        1.0 + ((score.correct / score.total) * 4.0);
+        1.0 + ((score.correct / score.total) * 5.0);
 
     const notaFinalFormateada =
         notaCalculada.toFixed(1);
