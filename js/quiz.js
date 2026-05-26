@@ -783,7 +783,7 @@ window.navigateToView = function(viewId) {
 
     document.getElementById(viewId)
         .classList.remove("hidden");
-
+}
     
 }
 window.fullApplicationReset = fullApplicationReset;
