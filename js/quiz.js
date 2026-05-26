@@ -157,7 +157,7 @@ const questions = [
         text: "Cuando se hizo periodista ¿cuál fue el primer artículo que escribió?", 
         options: [
             "“El triunfo del bien y del mal”.",
-            "El progreso del bien y del mal”.",
+            "“El progreso del bien y del mal”.",
             "“El progreso del bien sobre el mal”.",
             "“El camino del bien y del mal”.",
             "“El progreso de la verdad y del mal”."
@@ -168,11 +168,11 @@ const questions = [
         id: 20, 
         text: "Di el nombre de los periódicos en los que trabajó el Padre Gras", 
         options: [
-            "“La España Cristiana” and “La Regeneración”",
-            "“La España Católica” and “La Restauración”",
-            "“El Paladín Católico” and “La Regeneración”",
-            "“La España Católica” and “La Regeneración”",
-            "“El Bien Católico” and “La Regeneración”"
+            "“La España Cristiana” y “La Regeneración”",
+            "“La España Católica” y “La Restauración”",
+            "“El Paladín Católico” y “La Regeneración”",
+            "“La España Católica” y “La Regeneración”",
+            "“El Bien Católico” y “La Regeneración”"
         ], 
         correct: 3 
     },
@@ -270,11 +270,11 @@ const questions = [
         id: 31, 
         text: "¿Por qué titula a su revista “El Bien”?", 
         options: [
-            "Because Cristo es el Bien personal, social, universal, inmenso, eterno e infinito.",
-            "Because Cristo es el Bien individual, social, universal, inmenso, eterno e infinito.",
-            "Because Cristo es el Bien individual, familiar, universal, inmenso, eterno e infinito.",
-            "Because Cristo es el Bien individual, social, eclesial, inmenso, eterno y divino.",
-            "Because Jesús es el Bien individual, social, universal, supremo, eterno e infinito."
+            "Porque Cristo es el Bien personal, social, universal, inmenso, eterno e infinito.",
+            "Porque Cristo es el Bien individual, social, universal, inmenso, eterno e infinito.",
+            "Porque Cristo es el Bien individual, familiar, universal, inmenso, eterno e infinito.",
+            "Porque Cristo es el Bien individual, social, eclesial, inmenso, eterno y divino.",
+            "Porque Jesús es el Bien individual, social, universal, supremo, eterno e infinito."
         ], 
         correct: 1 
     },
@@ -334,7 +334,7 @@ const questions = [
     },
     { 
         id: 40, 
-        text: "In qué fecha murió José Gras?", 
+        text: "En qué fecha murió José Gras?", 
         options: ["El 7 de julio de 1918.", "El 26 de mayo de 1918.", "El 16 de agosto de 1918.", "El 7 de junio de 1918.", "El 15 de febrero de 1918."], 
         correct: 0 
     },
@@ -367,7 +367,7 @@ const questions = [
         text: "¿Para qué se esforzó incansablemente y trabajó sin desmayos según el decreto con el que se declara venerable a José Gras?", 
         options: [
             "Para que Cristo gobernara en el corazón de todo hombre, en la familia y en la sociedad.",
-            "Para que Cristo reinara in el corazón de todo hombre, en la familia y en la sociedad.",
+            "Para que Cristo reinara en el corazón de todo hombre, en la familia y en la sociedad.",
             "Para que Cristo reinara en la mente de todo niño, en la escuela y en la sociedad.",
             "Para que el Reino de Dios estuviera en el corazón de todo hombre, en la familia y en la sociedad.",
             "Para que Cristo reinara en el corazón de los hombres, en las familias y en las naciones."
