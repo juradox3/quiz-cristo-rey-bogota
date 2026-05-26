@@ -784,12 +784,6 @@ window.navigateToView = function(viewId) {
     document.getElementById(viewId)
         .classList.remove("hidden");
 
-    // RECARGAR RANKING
-    if (viewId === "viewRanking") {
-
-        import("./ranking.js").then(module => {
-            location.reload();
-        });
-    }
+    
 }
 window.fullApplicationReset = fullApplicationReset;
