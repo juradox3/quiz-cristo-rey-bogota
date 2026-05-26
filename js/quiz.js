@@ -410,17 +410,17 @@ const questions = [
         ], 
         correct: 1 
     },
-    { 
-        id: 48, 
-        text: "¿Qué es el PIFE?", 
-        options: [
-            "Proyecto internacional de formación evangélica.",
-            "Proyecto institucional de formación evangélica.",
-            "Plan institucional de formación evangélica.",
-            "Proyecto institucional de educación evangélica.",
-            "Programa institucional de formación evangélica."
-        ], 
-        correct: 1 
+{
+    text: "¿Cuál es el nombre correcto del proyecto PIFE?",
+    options: [
+        "Plan Institucional de Formación de Educadores", // Índice (Correcta)
+        "Proyecto Institucional de Formación de Educadores", // Índice 1
+        "Plan Institucional de Formación de Estudiantes", // Índice 2
+        "Plan Institucional de Fomento de Educadores", // Índice 3
+        "Plan Integrado de Formación de Educadores" // Índice 4
+    ],
+    correct: 0
+}
     },
     { 
         id: 49, 
