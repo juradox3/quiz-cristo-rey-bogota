@@ -514,10 +514,16 @@ function initializeQuiz() {
     timeElapsed = 0;
 
     document.getElementById("playerDisplay").textContent =
-        currentUser.name;
+    currentUser.name;
 
-    document.getElementById("jobDisplay").textContent =
-        currentUser.job;
+document.getElementById("jobDisplay").textContent =
+    currentUser.job;
+
+document.getElementById("diplomaName").textContent =
+    currentUser.name;
+
+document.getElementById("diplomaMeta").textContent =
+    `Rol: ${currentUser.job}`;
 
     startTimer();
     loadQuestion();
