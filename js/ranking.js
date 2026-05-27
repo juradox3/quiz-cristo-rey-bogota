@@ -41,4 +41,5 @@ async function cargarRanking() {
         console.error("Error cargando ranking", e);
     }
 }
-setTimeout(cargarRanking, 2000);
+cargarRanking();
+
