@@ -45,19 +45,6 @@ async function cargarRanking() {
             document.getElementById("participantsList").innerHTML = filas;
         }
 
-        // ===== TOP 5 (ranking.html) =====
-        if (document.getElementById("top5List")) {
-            document.getElementById("top5List").innerHTML = datos.slice(0, 5).map((p, i) => `
-                <div class="r-row">
-                    <div class="r-cell-pos">#${i + 1}</div>
-                    <div class="r-cell-info">
-                        <div class="r-cell-title">${p.nombre}</div>
-                        <div class="r-cell-subtitle">${p.rol || "Participante"}</div>
-                    </div>
-                    <div class="r-cell-score">${p.nota}</div>
-                </div>
-            `).join("");
-        }
 
     } catch (e) {
         console.error("Error cargando ranking", e);
