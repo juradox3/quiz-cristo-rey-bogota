@@ -41,7 +41,4 @@ async function cargarRanking() {
         console.error("Error cargando ranking", e);
     }
 }
-document.getElementById("top5List").innerHTML = "<p>Cargando resultados...</p>";
-document.getElementById("participantsList").innerHTML = "<p>Cargando resultados...</p>";
-
 setTimeout(cargarRanking, 2000);
