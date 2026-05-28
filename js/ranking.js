@@ -1,13 +1,22 @@
 import { obtenerRanking } from "./firebase.js";
 
+// 1. DECLARA ESTA VARIABLE AQUÍ ARRIBA (Global)
+let datosRanking = []; 
+
 async function cargarRanking() {
     try {
+        // 2. RECIBE LOS DATOS EN 'datos'
         const datos = await obtenerRanking();
 
         if (!datos || datos.length === 0) return;
 
-        datos.sort((a, b) => parseFloat(b.nota) - parseFloat(a.nota));
+        // 3. ASIGNA LOS DATOS A LA VARIABLE GLOBAL PARA QUE LA OTRA FUNCIÓN LOS VEA
+        datosRanking = datos; 
 
+        // ... resto de tu código igual ...
+        datosRanking.sort((a, b) => parseFloat(b.nota) - parseFloat(a.nota));
+
+        // ... etc ...
         // ===== PODIO (index.html) =====
         const top1 = datos[0], top2 = datos[1], top3 = datos[2];
         if (document.getElementById("pod1Name") && top1) {
