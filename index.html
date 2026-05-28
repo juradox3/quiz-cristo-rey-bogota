@@ -347,9 +347,23 @@
             <div id="tableRowsContainer"></div>
         </div>
 
-        <button class="btn btn-secondary" onclick="navigateToView('viewAccess')">
+       <div class="ranking-list-table">
+            <div class="r-row r-header">
+                <div style="text-align: center;">Pos</div>
+                <div>Participante / Dependencia</div>
+                <div style="text-align: right;">Nota</div>
+            </div>
+            <div id="tableRowsContainer"></div>
+        </div>
+
+        <button class="btn btn-primary" onclick="descargarReporte()" style="margin-bottom: 10px; width: 100%;">
+            <i class="fa-solid fa-download"></i> Descargar Reporte Completo (CSV)
+        </button>
+
+        <button class="btn btn-secondary" onclick="navigateToView('viewAccess')" style="width: 100%;">
             <i class="fa-solid fa-arrow-left"></i> Volver al Menú Principal
         </button>
+
     </div><!-- fin #viewRanking -->
 
     <footer class="app-footer">
