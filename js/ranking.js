@@ -53,3 +53,34 @@ async function cargarRanking() {
 
 window.cargarRanking = cargarRanking;
 cargarRanking();
+
+window.descargarReporte = function() {
+    if (typeof datosRanking === 'undefined' || datosRanking.length === 0) {
+        alert("Aún no hay datos cargados.");
+        return;
+    }
+
+    // Cabeceras del archivo CSV
+    let csvContent = "data:text/csv;charset=utf-8,Nombre,Rol,Nota,Porcentaje,Fecha\n";
+    
+    // Recorremos los datos que ya tienes en memoria
+    datosRanking.forEach(p => {
+        // Limpiamos datos para evitar errores en Excel
+        const nombre = (p.nombre || "Sin nombre").replace(/,/g, "");
+        const rol = (p.rol || "Participante").replace(/,/g, "");
+        const nota = p.nota || "0";
+        const porcentaje = p.porcentaje || "0";
+        const fecha = p.fecha || "Sin fecha";
+        
+        csvContent += `${nombre},${rol},${nota},${porcentaje},${fecha}\n`;
+    });
+
+    // Generar la descarga
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "Reporte_Ranking_Cristo_Rey.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
